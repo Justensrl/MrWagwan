@@ -172,7 +172,7 @@ for (const file of required) {
 const strategyFinal = await readFile(new URL('MRWAGWAN_HYBRID_STRATEGY.md', ROOT), 'utf8');
 check('artifact.strategy.generatedResults', strategyFinal.includes(`Eingefrorene Regelversion: \`${final.strategyVersion}\``) && strategyFinal.includes(`| Gesamt | ${final.summary.all.trades} |`), {});
 
-const validation = { generatedAt: new Date().toISOString(), status: failures.length ? 'FAIL' : 'PASS', checks, failures, warnings, dataAudit };
+const validation = { generatedAt: oosMarker.executedAt, status: failures.length ? 'FAIL' : 'PASS', checks, failures, warnings, dataAudit };
 await writeFile(new URL('generated/validation.json', ROOT), `${JSON.stringify(validation, null, 2)}\n`, 'utf8');
 process.stdout.write(`Validation ${validation.status}: ${checks.length - failures.length}/${checks.length} passed\n`);
 if (failures.length) process.exitCode = 1;
