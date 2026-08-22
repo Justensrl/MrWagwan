@@ -23,6 +23,8 @@ Dieses Verzeichnis enthält nur Analyse-, Download- und Backtestcode. Es erzeugt
 
 Phase 1 endet am 2025-05-01 und schreibt einen Hash-Freeze. Phase 2 verweigert die Ausführung bei geändertem Config-Hash. Ablationen/Sensitivitäten werden nicht im finalen OOS ausgewählt oder kombiniert.
 
+Nach dem ersten erfolgreichen Phase-2-Lauf bindet `generated/final_oos_execution.json` den Output-Hash und sperrt einen zweiten OOS-Lauf in demselben Audit-Workspace. Eine unabhängige Reproduktion erfolgt deshalb in einem frischen Worktree des im Freeze genannten Source-Commits; der Marker des abgeschlossenen Audits wird nicht gelöscht oder umgangen.
+
 ```powershell
 pnpm run data
 pnpm run phase1

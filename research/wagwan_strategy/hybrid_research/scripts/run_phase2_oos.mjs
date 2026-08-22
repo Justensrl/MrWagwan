@@ -7,6 +7,14 @@ import {
 
 const OUT = new URL('../generated/', import.meta.url);
 await mkdir(OUT, { recursive: true });
+let priorOosMarker = null;
+try { priorOosMarker = JSON.parse(await readFile(new URL('final_oos_execution.json', OUT), 'utf8')); }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
+if (priorOosMarker) throw new Error(`Final OOS already executed at ${priorOosMarker.executedAt}; refusing a second run`);
+let priorFinalOutput = false;
+try { await readFile(new URL('../MRWAGWAN_HYBRID_BACKTESTS.json', import.meta.url)); priorFinalOutput = true; }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
+if (priorFinalOutput) throw new Error('Final backtest output already exists without a matching execution marker; refusing to overwrite it');
 const freezeRaw = await readFile(new URL('selected_config_freeze.json', OUT), 'utf8');
 const freeze = JSON.parse(freezeRaw);
 const configHash = createHash('sha256').update(JSON.stringify(freeze.selectedConfig)).digest('hex');
@@ -84,5 +92,14 @@ const report = {
   researchTrials,
   trades: allTrades,
 };
-await writeFile(new URL('../MRWAGWAN_HYBRID_BACKTESTS.json', import.meta.url), `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+const finalText = `${JSON.stringify(report, null, 2)}\n`;
+await writeFile(new URL('../MRWAGWAN_HYBRID_BACKTESTS.json', import.meta.url), finalText, 'utf8');
+await writeFile(new URL('final_oos_execution.json', OUT), `${JSON.stringify({
+  executedAt: new Date().toISOString(),
+  repositorySourceCommit: freeze.repositorySourceCommit,
+  selectedConfigId: freeze.selectedConfig.id,
+  finalOosTrades: split.oos.length,
+  outputSha256: createHash('sha256').update(finalText).digest('hex'),
+  assertion: 'The phase-2 script refuses another final-OOS run while this marker exists.',
+}, null, 2)}\n`, 'utf8');
 process.stdout.write(`Final selected trades: ${allTrades.length}; OOS: ${split.oos.length}\n`);

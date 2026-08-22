@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { gzipSync, gunzipSync } from 'node:zlib';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, unlink, writeFile } from 'node:fs/promises';
 
 const FROM = new Date('2024-08-01T00:00:00.000Z');
 const TO = new Date('2025-08-01T00:00:00.000Z');
@@ -197,4 +197,5 @@ for (const item of instruments) {
 }
 
 await writeFile(new URL('manifest.json', OUT_DIR), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+await unlink(new URL('manifest.partial.json', OUT_DIR)).catch((error) => { if (error.code !== 'ENOENT') throw error; });
 process.stdout.write('Dukascopy dataset complete.\n');

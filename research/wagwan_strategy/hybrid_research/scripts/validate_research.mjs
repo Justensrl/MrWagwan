@@ -72,6 +72,9 @@ for (const [name, url] of Object.entries(frozenInputs)) {
 }
 
 const final = JSON.parse(await readFile(new URL('MRWAGWAN_HYBRID_BACKTESTS.json', ROOT), 'utf8'));
+const finalRaw = await readFile(new URL('MRWAGWAN_HYBRID_BACKTESTS.json', ROOT));
+const oosMarker = JSON.parse(await readFile(new URL('generated/final_oos_execution.json', ROOT), 'utf8'));
+check('selection.oos.executionMarker', oosMarker.outputSha256 === createHash('sha256').update(finalRaw).digest('hex') && oosMarker.selectedConfigId === freeze.selectedConfig.id, { marker: oosMarker });
 const trades = final.trades; const markets = ['XAUUSD', 'BTCUSD', 'NASDAQ', 'SP500', 'EURUSD'];
 const researchTrials = final.researchTrials ?? [];
 check('backtest.minimumTotal', researchTrials.length >= 1000, { actual: researchTrials.length, required: 1000, definition: final.researchTrialSummary?.definition });

@@ -12,12 +12,17 @@ const mrow = (label, m) => `| ${label} | ${m.trades} | ${pct(m.winRate)} | ${n(m
 const tableHeader = '| Segment | Trades | Win-Rate | Ø R | Gesamt-R | PF | Max DD R | Ø MFE R | Ø MAE R |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|';
 
 const oosMarkets = Object.entries(final.summary.perMarket).map(([market, x]) => ({ market, ...x.finalOos }));
+const baseline = phase1.results.find((x) => x.config.id === 'BASE_HYBRID_PREREG_1_0');
+const sensitivityRuns = phase1.results.filter((x) => x.config.id.startsWith('SENS_'));
+const baselineWfSign = Math.sign(baseline.wf.expectancyR ?? 0);
+const sensitivityStable = baselineWfSign !== 0 && sensitivityRuns.every((x) => Math.sign(x.wf.expectancyR ?? 0) === baselineWfSign);
 const nonNegative = oosMarkets.filter((x) => (x.expectancyR ?? -Infinity) >= 0).length;
 const marketPositiveR = oosMarkets.map((x) => Math.max(0, x.totalR ?? 0));
 const totalPositiveR = marketPositiveR.reduce((a, b) => a + b, 0);
 const maxContribution = totalPositiveR > 0 ? Math.max(...marketPositiveR) / totalPositiveR : 1;
 const oos = final.summary.finalOos;
-const promising = oos.expectancyR > 0 && oos.profitFactor > 1.05 && nonNegative >= 3 && maxContribution <= 0.60;
+const oosSampleAdequate = oos.trades >= 100 && oosMarkets.every((x) => x.trades >= 10);
+const promising = oos.expectancyR > 0 && oos.profitFactor > 1.05 && nonNegative >= 3 && maxContribution <= 0.60 && sensitivityStable && oosSampleAdequate;
 const trialSummary = final.researchTrialSummary;
 const minTotal = trialSummary.totalTests >= 1000;
 const minEach = Object.values(trialSummary.byMarket).every((count) => count >= 200);
@@ -54,6 +59,21 @@ ${mrow('Final OOS', final.summary.finalOos)}
 
 95%-Intervall des finalen OOS-Erwartungswerts: **${n(oos.expectancy95[0])}R bis ${n(oos.expectancy95[1])}R**. Dieses Intervall zeigt Stichprobenunsicherheit; es ist keine Gewinnprognose.
 
+### Vollständige Kernstatistik der ausgewählten Variante
+
+| Kennzahl | Gesamt | Final OOS |
+|---|---:|---:|
+| Wins / Losses / Break-even | ${final.summary.all.wins} / ${final.summary.all.losses} / ${final.summary.all.breakEven} | ${oos.wins} / ${oos.losses} / ${oos.breakEven} |
+| Win-Rate | ${pct(final.summary.all.winRate)} | ${pct(oos.winRate)} |
+| Netto-R | ${n(final.summary.all.totalR)} | ${n(oos.totalR)} |
+| Erwartungswert / Median R | ${n(final.summary.all.expectancyR)} / ${n(final.summary.all.medianR)} | ${n(oos.expectancyR)} / ${n(oos.medianR)} |
+| Profit Factor | ${n(final.summary.all.profitFactor)} | ${n(oos.profitFactor)} |
+| Ø Gewinner / Ø Verlust R | ${n(final.summary.all.averageWinR)} / ${n(final.summary.all.averageLossR)} | ${n(oos.averageWinR)} / ${n(oos.averageLossR)} |
+| Max Drawdown / max. Verlustserie | ${n(final.summary.all.maxDrawdownR)} / ${final.summary.all.maxLossStreak} | ${n(oos.maxDrawdownR)} / ${oos.maxLossStreak} |
+| Ø MFE / Ø MAE R | ${n(final.summary.all.averageMfeR)} / ${n(final.summary.all.averageMaeR)} | ${n(oos.averageMfeR)} / ${n(oos.averageMaeR)} |
+| Ø Haltedauer Minuten | ${n(final.summary.all.averageDurationMinutes, 1)} | ${n(oos.averageDurationMinutes, 1)} |
+| TP1 / TP2 / TP3 Hit-Rate | ${pct(final.summary.all.tp1HitRate)} / ${pct(final.summary.all.tp2HitRate)} / ${pct(final.summary.all.tp3HitRate)} | ${pct(oos.tp1HitRate)} / ${pct(oos.tp2HitRate)} / ${pct(oos.tp3HitRate)} |
+
 ## Marktweise Ergebnisse
 
 | Markt | Gesamt Trades | Gesamt ØR | Gesamt PF | OOS Trades | OOS Win-Rate | OOS ØR | OOS PF | OOS Max DD R |
@@ -66,6 +86,11 @@ ${Object.entries(final.summary.perMarket).map(([market, x]) => `| ${market} | ${
 
 ${tableHeader}
 ${Object.entries(final.summary.bySession).map(([k, v]) => mrow(k, v)).join('\n')}
+
+### Long vs. Short
+
+${tableHeader}
+${Object.entries(final.summary.byDirection).map(([k, v]) => mrow(k, v)).join('\n')}
 
 ### Volatilität
 
@@ -83,6 +108,11 @@ Nur BTCUSD/NASDAQ/SP500 werden deskriptiv klassifiziert: bullish 1H = \`risk_on_
 
 ${tableHeader}
 ${Object.entries(final.summary.byRiskRegime).map(([k, v]) => mrow(k, v)).join('\n')}
+
+### Monate
+
+${tableHeader}
+${Object.entries(final.summary.byMonth).map(([k, v]) => mrow(k, v)).join('\n')}
 
 ## News-Effekt
 
@@ -102,8 +132,10 @@ Die kausalere Ein-Regel-Ablation (kein Filter / 30 / 60 / 120 Minuten / ganzer T
 | Trades der final ausgewählten Variante | INFO (${final.summary.all.trades}; nicht künstlich erhöht) |
 | OOS ØR > 0 | ${oos.expectancyR > 0 ? 'PASS' : 'FAIL'} (${n(oos.expectancyR)}R) |
 | OOS PF > 1,05 | ${oos.profitFactor > 1.05 ? 'PASS' : 'FAIL'} (${n(oos.profitFactor)}) |
+| Final OOS >=100 Trades und >=10 je Markt | ${oosSampleAdequate ? 'PASS' : 'FAIL'} (${oos.trades}; ${oosMarkets.map((x) => `${x.market} ${x.trades}`).join(', ')}) |
 | >=3/5 OOS-Märkte nicht-negativ | ${nonNegative >= 3 ? 'PASS' : 'FAIL'} (${nonNegative}/5) |
 | Kein Markt >60% positiver OOS-Beitrag | ${maxContribution <= 0.60 ? 'PASS' : 'FAIL'} (${pct(maxContribution)}) |
+| Kein WF-Vorzeichenwechsel in preregistrierten Parameter-Nachbarschaften | ${sensitivityStable ? 'PASS' : 'FAIL'} |
 
 ## Einschränkungen
 
@@ -117,7 +149,6 @@ Die kausalere Ein-Regel-Ablation (kein Filter / 30 / 60 / 120 Minuten / ganzer T
 - Finanzieller „erwarteter Profit“ wird in R berichtet. Bei rein illustrativem Modellrisiko 1% entspräche 1R etwa 1% des jeweiligen damaligen Modellkapitals; dies ist keine Prognose.
 `;
 
-const baseline = phase1.results.find((x) => x.config.id === 'BASE_HYBRID_PREREG_1_0');
 const byId = Object.fromEntries(phase1.results.map((x) => [x.config.id, x]));
 const ruleRows = [
   { rule: 'Video-POI/Origin-Mitigation als Pflicht', id: 'ABL_POI_REQUIRED', mode: 'variant' },
@@ -211,6 +242,8 @@ const log = `# MrWagwan Hybrid — Research Log und Handoff
 7. Alle Ablationen und Sensitivitäten liefen nur auf IS + Walk-forward. Danach wurde die Auswahl in \`generated/selected_config_freeze.json\` gehasht.
 8. Erst danach lief die eingefrorene Variante auf der finalen OOS-Periode. Alle ${trialSummary.totalTests} Kandidaten-/Ablations-/OOS-Tests sowie die getrennten Trades der finalen Variante stehen in \`MRWAGWAN_HYBRID_BACKTESTS.json\`.
 9. Der für Phase 1 und OOS verwendete Source-Commit lautet \`${final.frozenSelection.repositorySourceCommit}\`; zusätzliche Eingabedateien sind im Freeze einzeln per SHA-256 gebunden.
+10. Es gibt keine Zufallsauswahl und daher keinen Seed; gleiche Eingaben und derselbe Source-Commit führen deterministisch zum selben Lauf.
+11. \`generated/final_oos_execution.json\` bindet den einmaligen OOS-Lauf an den SHA-256 des finalen JSON; Phase 2 verweigert in diesem Workspace jeden zweiten Lauf.
 
 ## Daten- und Quellenhinweise
 

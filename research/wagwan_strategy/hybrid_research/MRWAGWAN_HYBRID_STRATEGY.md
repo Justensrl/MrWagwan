@@ -1,7 +1,10 @@
 # MrWagwan Hybrid Research Strategy — preregistrierte Spezifikation
 
-Version: `HYBRID-PREREG-1.0`  
-Preregistriert: 2026-08-22, **vor** Berechnung der neuen Backtest-Ergebnisse  
+Dokumentversion: `HYBRID-PREREG-1.1-FREQUENCY-AUDIT`
+
+Basis-Kandidaten-ID: `BASE_HYBRID_PREREG_1_0`
+
+Preregistriert: 2026-08-22. Die Kernregeln 1.0 wurden vor neuen Ergebnissen geschrieben; die ausdrücklich nicht auswählbare Frequenzdiagnose in Abschnitt 9 wurde danach nur anhand von XAUUSD-IS/WF registriert, weiterhin vor dem All-Market-Lauf und vor jedem finalen OOS.
 Status: ausschließlich Research/Backtest; nicht für Live-Trading freigegeben
 
 ## 1. Forschungsziel und Grenzen
@@ -152,6 +155,7 @@ Zielstichprobe: mindestens 1.000 abgeschlossene Research-Tests insgesamt und min
 
 Eine Variante kann nur **promising** heißen, wenn im Final OOS:
 
+- mindestens 100 Trades insgesamt und mindestens 10 je Markt vorliegen,
 - Erwartungswert nach Kosten > 0R,
 - Profit Factor > 1,05,
 - mindestens drei der fünf Märkte nicht-negativen Erwartungswert zeigen,
@@ -163,6 +167,8 @@ Ohne diese Bedingungen lautet der Status **not validated** bzw. **rejected**. Se
 ## 11. Reproduzierbarkeit
 
 Der Backtester speichert je Trade Signalzeiten und -levels, Session, Bias, Liquiditätsklasse, POI/FVG/MSS-Werte, Bid/Ask-Fills, Slippage, R-Exits, Newsdistanz, MFE/MAE, Haltedauer, Split und Regelversion. Rohdateien erhalten SHA-256-Prüfsummen. Quellcode, Konfiguration, Eventregister und erzeugtes JSON sind Teil des Research-Artefakts.
+
+Die Pipeline ist vollständig deterministisch und verwendet keine Zufallsauswahl; ein Random-Seed ist daher nicht anwendbar. Chronologische Reihenfolge und konservatives Stop-first bei einer intraminütig gleichzeitig möglichen Stop-/Target-Berührung sind fest vorgegeben.
 
 ## 12. A+-Kriterien, verbotene Setups und Beispiele
 

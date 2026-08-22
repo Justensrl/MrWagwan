@@ -8,6 +8,12 @@ import {
 
 const OUT = new URL('../generated/', import.meta.url);
 await mkdir(OUT, { recursive: true });
+try {
+  const marker = JSON.parse(await readFile(new URL('final_oos_execution.json', OUT), 'utf8'));
+  throw new Error(`Final OOS already executed at ${marker.executedAt}; refusing to regenerate Phase 1`);
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 const repositorySourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const preregistrationInputs = {
   strategy: new URL('../MRWAGWAN_HYBRID_STRATEGY.md', import.meta.url),
