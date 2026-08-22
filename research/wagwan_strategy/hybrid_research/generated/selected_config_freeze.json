@@ -1,0 +1,37 @@
+{
+  "frozenAt": "2026-08-22T15:40:09.531Z",
+  "selectedConfig": {
+    "id": "BASE_HYBRID_PREREG_1_0",
+    "fvgRequired": true,
+    "entryMode": "retest",
+    "poiRequired": false,
+    "externalOnly": false,
+    "biasRequired": true,
+    "allowCountertrend": false,
+    "fourHBias": false,
+    "newsWindowMin": 60,
+    "fullEventDay": false,
+    "targetSpaceRequired": true,
+    "vReaction": false,
+    "sweepAtr": 0.03,
+    "maxSweepAtr": 1.5,
+    "displacementAtr": 0.5,
+    "zoneDisplacementAtr": 0.8,
+    "stopBufferAtr": 0.15,
+    "minStopAtr": 0.25,
+    "maxStopAtr": 5,
+    "maxEntriesPerSession": 2
+  },
+  "selectedConfigSha256": "46b3ca1720edbdd15d90daeb1b9e667a03118c2ba2b1af7cd9a598ae99ca2e34",
+  "phase1Sha256": "50562780be6ed03d8b44e7b6d89a61775facb0d5d98c70c29a522fef35daaa6e",
+  "phase1TrialsSha256": "bf5ba76dcca236cfed08ce3bd460b2a51763c37cc683ccc7218bdf727a4d5524",
+  "preregistrationInputSha256": {
+    "strategy": "5dc174d79936bec10406c91052054209f12682bf2eeb55741e25720d294ec0a4",
+    "backtestCore": "4e603cae1abaef9989998495fd9f91769c61a574d3194e94c14a5c33f8ace8c6",
+    "newsRegistry": "a7f4d1b36310f10ba537ef30209d7d347c4fc3aeb064d46f1e76b7a73d78c137",
+    "dataManifest": "cc42e7d5895f4f8ea0f317f907a7249828a3d0723a9ad1d6267ea82ae9e44cde"
+  },
+  "repositorySourceCommit": "1564d5a1cec61ceef32dc772fd695b20e2637a89",
+  "oosStartUtc": "2025-05-01T00:00:00.000Z",
+  "assertion": "Selection completed without running final OOS in this script."
+}

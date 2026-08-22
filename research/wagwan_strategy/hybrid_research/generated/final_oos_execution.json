@@ -1,0 +1,8 @@
+{
+  "executedAt": "2026-08-22T15:41:03.042Z",
+  "repositorySourceCommit": "1564d5a1cec61ceef32dc772fd695b20e2637a89",
+  "selectedConfigId": "BASE_HYBRID_PREREG_1_0",
+  "finalOosTrades": 23,
+  "outputSha256": "afe6ac708d0758c547caac6f028ad15ee4d5a945a68a077c7519d70deab01b45",
+  "assertion": "The phase-2 script refuses another final-OOS run while this marker exists."
+}

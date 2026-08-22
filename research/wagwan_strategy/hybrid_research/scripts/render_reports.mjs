@@ -30,8 +30,10 @@ const strategyStatus = promising ? 'PROMISING – MORE DATA REQUIRED' : 'NOT VAL
 
 const results = `# MrWagwan Hybrid — Backtest-Ergebnisse
 
-Stand: ${final.generatedAt}  
-Regelversion: \`${final.strategyVersion}\`  
+Stand: ${final.generatedAt}
+
+Regelversion: \`${final.strategyVersion}\`
+
 Preregistered source commit: \`${final.frozenSelection.repositorySourceCommit}\`
 Status: **${strategyStatus}**
 
@@ -142,6 +144,7 @@ Die kausalere Ein-Regel-Ablation (kein Filter / 30 / 60 / 120 Minuten / ganzer T
 - Der Zeitraum umfasst exakt zwölf Monate, aber nur **eine** historische Jahresprobe.
 - CFD-Proxys können Futures-Session, Roll, Liquidität und Kosten nicht identisch abbilden.
 - Dukascopy-Bid/Ask ist eine Datenquelle; modellierte Zusatzslippage ist keine Garantie echter Fills.
+- Der offizielle EURUSD-Widget-Export enthält am 2024-10-09/10 selbst 164 gekreuzte Bid/Ask-Minuten und 774 geometrisch unplausible OHLC-Minuten. Alle vier BID/ASK-Tagesdateien stimmen exakt mit dem Decoder überein. Die Werte wurden nicht heimlich repariert; zwei Entwicklungs-/Diagnosetrades überlappen direkt, aber kein Trade der eingefrorenen Basis und kein OOS-Trade. Details: \`SOURCE_DATA_ANOMALY_AUDIT.md\`.
 - FVG, Pivots, Origin-Zonen und MSS sind algorithmische Stellvertreter für diskretionäre SMC-Lesarten.
 - Die Videostrategie basiert im Video im Wesentlichen auf einem Trade; ihre Regeln waren unvollständig und teils widersprüchlich.
 - Viele getestete Ablationen erhöhen Multiple-Testing-Risiko. Der finale OOS blieb deshalb für die Auswahl gesperrt.
@@ -238,7 +241,7 @@ const log = `# MrWagwan Hybrid — Research Log und Handoff
 3. Bestehende MrWagwan-V3-, Session-, Risiko- und Marktberichte wurden gelesen; frühere Resultate wurden nicht als neue Evidenz umetikettiert.
 4. Vor dem neuen Backtest wurden Vergleich, Hybridregeln, Daten-/Kostenmodell, Ablationen, Sensitivitäten, Auswahlhürde und OOS-Grenze schriftlich preregistriert.
 5. Offizielle BLS-, Fed- und ECB-Kalender wurden auf einen konservativen Kern ausgewählter Hochrisikoereignisse reduziert; historische DST wurde in UTC-Zeitstempel umgerechnet. Fehlende PCE/GDP/Retail/ISM-Abdeckung ist ausdrücklich dokumentiert.
-6. Zwölf Monate Dukascopy-1m-Bid/Ask-Daten wurden über die offiziellen seriellen JETTA-Tagesendpunkte mit Cache/Retry geladen, zusammengeführt, komprimiert, gehasht und auf Reihenfolge, Duplikate, Umfang und Spread geprüft. Der Decoder wurde am XAU/USD-BID-Tag 2024-08-01 vollständig gegen den offiziellen Widget-CSV-Export verifiziert (1.380 Kerzen, 0 Abweichungen).
+6. Zwölf Monate Dukascopy-1m-Bid/Ask-Daten wurden über die offiziellen seriellen JETTA-Tagesendpunkte mit Cache/Retry geladen, zusammengeführt, komprimiert, gehasht und auf Reihenfolge, Duplikate, Umfang und Spread geprüft. Der Decoder wurde am XAU/USD-BID-Tag 2024-08-01 vollständig gegen den offiziellen Widget-CSV-Export verifiziert (1.380 Kerzen, 0 Abweichungen). Zusätzlich wurden EURUSD BID/ASK für 2024-10-09/10 wegen einer quellseitigen Anomalie in allen 5.738 Widget-Zeilen exakt gegengeprüft (0 Abweichungen); der Befund steht in \`SOURCE_DATA_ANOMALY_AUDIT.md\`.
 7. Alle Ablationen und Sensitivitäten liefen nur auf IS + Walk-forward. Danach wurde die Auswahl in \`generated/selected_config_freeze.json\` gehasht.
 8. Erst danach lief die eingefrorene Variante auf der finalen OOS-Periode. Alle ${trialSummary.totalTests} Kandidaten-/Ablations-/OOS-Tests sowie die getrennten Trades der finalen Variante stehen in \`MRWAGWAN_HYBRID_BACKTESTS.json\`.
 9. Der für Phase 1 und OOS verwendete Source-Commit lautet \`${final.frozenSelection.repositorySourceCommit}\`; zusätzliche Eingabedateien sind im Freeze einzeln per SHA-256 gebunden.
@@ -269,6 +272,7 @@ Die Phase-2-Datei darf nicht vor dem Freeze ausgeführt werden. Änderungen an R
 ## Probleme und Entscheidungen
 
 - Der öffentliche Datenendpunkt drosselte parallele Requests (HTTP 429) und zeigte einen transienten Netzwerkfehler. Der Downloader wurde deshalb **vor** dem Test auf seriellen Abruf, Cache und äußere Retries umgestellt.
+- Der offizielle Dukascopy-EURUSD-Export weist am 2024-10-09/10 164 gekreuzte Bid/Ask-Minuten und 774 OHLC-Geometriefehler auf. Diese Quelleigenschaft wurde bytegetreu belegt, nicht korrigiert und als Warnung behandelt. Zwei nicht auswählbare Entwicklungs-/Diagnosetrades überlappen; finale OOS-Trades nicht.
 - Kostenlos reproduzierbare CME-NQ/ES-Bid/Ask-Daten standen nicht zur Verfügung; NASDAQ/SP500 werden klar als Dukascopy-CFD-Proxys markiert.
 - Der Newsfilter enthält einen offiziell verifizierten Kern aus NFP, CPI, PPI, FOMC und ECB, aber kein vollständiges historisches Register für PCE, GDP, Retail Sales, ISM oder ungeplante Meldungen. News-Auswertungen gelten nur für den erfassten Ereignissatz.
 - Das Video definiert weder Pivotbreite noch FVG-Geometrie, Sweep-Schwelle, Risikoprozent oder Newsregel. Diese Teile stammen aus der preregistrierten MrWagwan-Hybriddefinition und werden nicht dem Video zugeschrieben.
@@ -290,8 +294,10 @@ Verwende ausschließlich die eingefrorene Regelversion **${final.strategyVersion
 const resultAppendix = `<!-- GENERATED_RESULTS_START -->
 ## 14. Generierter Ergebnisanhang
 
-Erzeugt: ${final.generatedAt}  
-Eingefrorene Regelversion: \`${final.strategyVersion}\`  
+Erzeugt: ${final.generatedAt}
+
+Eingefrorene Regelversion: \`${final.strategyVersion}\`
+
 Status: **${strategyStatus}**
 
 Research-Testabdeckung: **${trialSummary.totalTests} vollständige Tests**, davon ${Object.entries(trialSummary.byMarket).map(([k, v]) => `${k} ${v}`).join(', ')}. Diese Tests enthalten korrelierte Varianten und sind keine gemeinsame Performance-Stichprobe. Die final ausgewählte Variante erzeugte ${final.summary.all.trades} Trades über den Gesamtzeitraum.
@@ -316,6 +322,7 @@ ${Object.entries(final.summary.perMarket).map(([market, x]) => `| ${market} | ${
 - Der Red-News-Filter ist auf den verifizierten Kern NFP/CPI/PPI/FOMC/ECB beschränkt.
 - Algorithmische SMC-Proxys bilden diskretionäre Struktur-, FVG- und Order-Block-Lesarten nur näherungsweise ab.
 - Bid/Ask wurde beobachtet; Slippage und Commission bleiben modellierte Annahmen.
+- Eine belegte EURUSD-Quellanomalie am 2024-10-09/10 bleibt in den Rohdaten erhalten; deshalb sind zwei Entwicklungs-/Diagnosetrades nur eingeschränkt interpretierbar. Die finale Basis und OOS haben keine direkte Trade-Überlappung.
 
 Vollständige Kennzahlen, Ablationen, Sensitivität, Einzeldaten und Einschränkungen stehen in \`MRWAGWAN_HYBRID_RESULTS.md\`, \`MRWAGWAN_ABLATION_RESULTS.md\` und \`MRWAGWAN_HYBRID_BACKTESTS.json\`.
 <!-- GENERATED_RESULTS_END -->`;

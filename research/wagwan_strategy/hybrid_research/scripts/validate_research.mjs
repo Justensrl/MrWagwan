@@ -10,6 +10,7 @@ const manifest = JSON.parse(await readFile(new URL('raw/dukascopy/manifest.json'
 check('data.manifest.count', manifest.instruments.length === 5, { actual: manifest.instruments.length, expected: 5 });
 const dataAudit = {};
 let xauBarsForWidgetCheck = null;
+let eurBarsForWidgetCheck = null;
 for (const item of manifest.instruments) {
   const bytes = await readFile(new URL(`raw/dukascopy/${item.filename}`, ROOT));
   const sha = createHash('sha256').update(bytes).digest('hex');
@@ -33,10 +34,13 @@ for (const item of manifest.instruments) {
   check(`data.${item.market}.calendarCoverage`, distinctUtcDays.size >= 240, { distinctUtcDays: distinctUtcDays.size, required: 240 });
   check(`data.${item.market}.rangeCoverage`, bars[0][0] < Date.parse('2024-08-04T00:00:00Z') && bars.at(-1)[0] >= Date.parse('2025-07-29T00:00:00Z'), { firstUtc: dataAudit[item.market].firstUtc, lastUtc: dataAudit[item.market].lastUtc });
   check(`data.${item.market}.ordering`, unsorted === 0 && duplicates === 0, { unsorted, duplicates });
-  check(`data.${item.market}.spreadNonnegative`, negativeSpread === 0, { negativeSpread });
-  check(`data.${item.market}.ohlcGeometry`, invalidOhlc === 0, { invalidOhlc });
+  if (item.market !== 'EURUSD') {
+    check(`data.${item.market}.spreadNonnegative`, negativeSpread === 0, { negativeSpread });
+    check(`data.${item.market}.ohlcGeometry`, invalidOhlc === 0, { invalidOhlc });
+  }
   check(`data.${item.market}.minuteAligned`, unaligned === 0, { unaligned });
   if (item.market === 'XAUUSD') xauBarsForWidgetCheck = bars;
+  if (item.market === 'EURUSD') eurBarsForWidgetCheck = bars;
 }
 const widgetCsvText = await readFile(new URL('raw/validation/XAU-USD_1Minute_BID_2024-08-01_official_widget.csv', ROOT), 'utf8');
 const widgetRows = widgetCsvText.trim().split(/\r?\n/).slice(1).map((line) => line.split(','));
@@ -49,6 +53,46 @@ for (let i = 0; i < Math.min(widgetRows.length, decodedRows.length); i += 1) {
   if (csvTime !== bar[0] || values.some((value, j) => value !== [bar[1], bar[2], bar[3], bar[4], bar[9]][j])) widgetMismatches += 1;
 }
 check('data.XAUUSD.officialWidgetCsvExact', widgetMismatches === 0 && widgetRows.length === 1380, { widgetRows: widgetRows.length, decodedRows: decodedRows.length, mismatches: widgetMismatches });
+
+const eurWidgetComparisons = [];
+for (const day of ['2024-10-09', '2024-10-10']) {
+  for (const side of ['BID', 'ASK']) {
+    const text = await readFile(new URL(`raw/validation/EUR-USD_1Minute_${side}_${day}_official_widget.csv`, ROOT), 'utf8');
+    const rows = text.trim().split(/\r?\n/).slice(1).map((line) => line.split(','));
+    const start = Date.parse(`${day}T00:00:00Z`); const end = start + 86_400_000;
+    const decoded = (eurBarsForWidgetCheck ?? []).filter((bar) => bar[0] >= start && bar[0] < end);
+    const valueIndexes = side === 'BID' ? [1, 2, 3, 4, 9] : [5, 6, 7, 8, 10];
+    let mismatches = Math.abs(rows.length - decoded.length);
+    for (let i = 0; i < Math.min(rows.length, decoded.length); i += 1) {
+      const values = rows[i].slice(1).map(Number); const bar = decoded[i];
+      if (Date.parse(rows[i][0]) !== bar[0] || values.some((value, j) => value !== bar[valueIndexes[j]])) mismatches += 1;
+    }
+    eurWidgetComparisons.push({ day, side, widgetRows: rows.length, decodedRows: decoded.length, mismatches });
+  }
+}
+const eurWidgetExact = eurWidgetComparisons.every((x) => x.mismatches === 0 && x.widgetRows === x.decodedRows);
+check('data.EURUSD.officialWidgetCsvExactAnomalyWindow', eurWidgetExact, { comparisons: eurWidgetComparisons });
+const anomalyStart = Date.parse('2024-10-09T23:09:00Z');
+const anomalyEnd = Date.parse('2024-10-11T00:00:00Z');
+const eurOutsideAnomaly = (eurBarsForWidgetCheck ?? []).filter((b) => {
+  const crossed = b[5] < b[1] || b[6] < b[2] || b[7] < b[3] || b[8] < b[4];
+  const invalid = b[2] < Math.max(b[1], b[4]) || b[3] > Math.min(b[1], b[4]) || b[6] < Math.max(b[5], b[8]) || b[7] > Math.min(b[5], b[8]);
+  return (crossed || invalid) && (b[0] < anomalyStart || b[0] >= anomalyEnd);
+}).length;
+const eurSourceExceptionVerified = eurWidgetExact && eurOutsideAnomaly === 0
+  && dataAudit.EURUSD.negativeSpread === 164 && dataAudit.EURUSD.invalidOhlc === 774;
+check('data.EURUSD.spreadIntegrityOrVerifiedSourceException', dataAudit.EURUSD.negativeSpread === 0 || eurSourceExceptionVerified, { negativeSpread: dataAudit.EURUSD.negativeSpread, outsideDocumentedWindow: eurOutsideAnomaly, officialWidgetExact: eurWidgetExact });
+check('data.EURUSD.ohlcIntegrityOrVerifiedSourceException', dataAudit.EURUSD.invalidOhlc === 0 || eurSourceExceptionVerified, { invalidOhlc: dataAudit.EURUSD.invalidOhlc, outsideDocumentedWindow: eurOutsideAnomaly, officialWidgetExact: eurWidgetExact });
+if (eurSourceExceptionVerified) warnings.push({
+  id: 'data.EURUSD.officialSourceAnomaly',
+  details: {
+    windowUtc: ['2024-10-09T23:09:00Z', '2024-10-10T23:59:00Z'],
+    negativeSpreadBars: 164,
+    invalidOhlcBars: 774,
+    evidence: eurWidgetComparisons,
+    handling: 'Retained byte-for-byte for source fidelity; not silently repaired. See SOURCE_DATA_ANOMALY_AUDIT.md.',
+  },
+});
 
 const phase1Raw = await readFile(new URL('generated/phase1_ablation.json', ROOT), 'utf8');
 const phase1 = JSON.parse(phase1Raw);
@@ -77,6 +121,11 @@ const oosMarker = JSON.parse(await readFile(new URL('generated/final_oos_executi
 check('selection.oos.executionMarker', oosMarker.outputSha256 === createHash('sha256').update(finalRaw).digest('hex') && oosMarker.selectedConfigId === freeze.selectedConfig.id, { marker: oosMarker });
 const trades = final.trades; const markets = ['XAUUSD', 'BTCUSD', 'NASDAQ', 'SP500', 'EURUSD'];
 const researchTrials = final.researchTrials ?? [];
+const selectedAnomalyOverlap = trades.filter((t) => t.market === 'EURUSD' && t.entryTime < anomalyEnd && t.exitTime >= anomalyStart);
+const trialAnomalyOverlap = researchTrials.filter((t) => t.market === 'EURUSD' && t.entryTime < anomalyEnd && t.exitTime >= anomalyStart);
+check('backtest.selectedVariant.noDirectEurSourceAnomalyOverlap', selectedAnomalyOverlap.length === 0, { tradeIds: selectedAnomalyOverlap.map((t) => t.tradeId) });
+check('backtest.finalOos.noEurSourceAnomalyOverlap', trades.filter((t) => t.researchSplit === 'OOS' && t.market === 'EURUSD' && t.entryTime < anomalyEnd && t.exitTime >= anomalyStart).length === 0, {});
+if (trialAnomalyOverlap.length) warnings.push({ id: 'backtest.researchTrials.eurSourceAnomalyOverlap', details: { count: trialAnomalyOverlap.length, testIds: trialAnomalyOverlap.map((t) => t.testId), note: 'Development/diagnostic coverage only; do not interpret these trials as clean independent evidence.' } });
 check('backtest.minimumTotal', researchTrials.length >= 1000, { actual: researchTrials.length, required: 1000, definition: final.researchTrialSummary?.definition });
 for (const market of markets) check(`backtest.${market}.minimum200`, researchTrials.filter((t) => t.market === market).length >= 200, { actual: researchTrials.filter((t) => t.market === market).length, required: 200 });
 check('backtest.tradeIdsUnique', new Set(trades.map((t) => t.tradeId)).size === trades.length, {});
@@ -114,6 +163,7 @@ const required = [
   'VIDEO_STRATEGY_EXTRACTION.md', 'VIDEO_VS_MRWAGWAN_COMPARISON.md', 'MRWAGWAN_HYBRID_STRATEGY.md',
   'MRWAGWAN_HYBRID_BACKTESTS.json', 'MRWAGWAN_HYBRID_RESULTS.md', 'MRWAGWAN_ABLATION_RESULTS.md',
   'MRWAGWAN_MARKET_COMPARISON.md', 'MRWAGWAN_RESEARCH_LOG.md',
+  'SOURCE_DATA_ANOMALY_AUDIT.md',
 ];
 for (const file of required) {
   try { const x = await readFile(new URL(file, ROOT)); check(`artifact.${file}`, x.length > 100, { bytes: x.length }); }

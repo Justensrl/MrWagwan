@@ -200,5 +200,39 @@ Die Backtestresultate werden nach Hash-Freeze und einmaligem Final-OOS-Lauf in `
 <!-- GENERATED_RESULTS_START -->
 ## 14. Generierter Ergebnisanhang
 
-Noch nicht ausgeführt. Dieser Bereich wird erst nach dem eingefrorenen Final-OOS-Lauf automatisch ersetzt; er gehört nicht zum gehashten Regelteil.
+Erzeugt: 2026-08-22T15:41:03.000Z
+
+Eingefrorene Regelversion: `BASE_HYBRID_PREREG_1_0`
+
+Status: **NOT VALIDATED**
+
+Research-Testabdeckung: **2998 vollständige Tests**, davon XAUUSD 563, BTCUSD 680, NASDAQ 592, SP500 455, EURUSD 708. Diese Tests enthalten korrelierte Varianten und sind keine gemeinsame Performance-Stichprobe. Die final ausgewählte Variante erzeugte 88 Trades über den Gesamtzeitraum.
+
+| Segment | Trades | Win-Rate | Gesamt-R | Ø R | Profit Factor | Max Drawdown R |
+|---|---:|---:|---:|---:|---:|---:|
+| Gesamt | 88 | 43.2% | -17.13 | -0.19 | 0.66 | 18.01 |
+| In-Sample | 43 | 39.5% | -13.26 | -0.31 | 0.49 | 15.37 |
+| Walk-forward | 22 | 63.6% | 10.71 | 0.49 | 2.48 | 4.39 |
+| Final OOS | 23 | 30.4% | -14.58 | -0.63 | 0.14 | 15.11 |
+
+### Marktweise Final-OOS-Ergebnisse
+
+| Markt | Trades | Win-Rate | Gesamt-R | Ø R | PF | Max DD R |
+|---|---:|---:|---:|---:|---:|---:|
+| XAUUSD | 4 | 50.0% | -1.46 | -0.37 | 0.31 | 1.78 |
+| BTCUSD | 6 | 33.3% | -3.74 | -0.62 | 0.22 | 3.74 |
+| NASDAQ | 6 | 0.0% | -6.63 | -1.11 | 0.00 | 6.63 |
+| SP500 | 3 | 66.7% | -0.77 | -0.26 | 0.28 | 1.07 |
+| EURUSD | 4 | 25.0% | -1.97 | -0.49 | 0.18 | 2.41 |
+
+### Bekannte Schwächen
+
+- Nur eine Zwölfmonatsprobe; selbst positive OOS-Werte sind keine Live-Validierung.
+- NASDAQ und S&P 500 sind Dukascopy-CFD-Proxys statt CME NQ/ES.
+- Der Red-News-Filter ist auf den verifizierten Kern NFP/CPI/PPI/FOMC/ECB beschränkt.
+- Algorithmische SMC-Proxys bilden diskretionäre Struktur-, FVG- und Order-Block-Lesarten nur näherungsweise ab.
+- Bid/Ask wurde beobachtet; Slippage und Commission bleiben modellierte Annahmen.
+- Eine belegte EURUSD-Quellanomalie am 2024-10-09/10 bleibt in den Rohdaten erhalten; deshalb sind zwei Entwicklungs-/Diagnosetrades nur eingeschränkt interpretierbar. Die finale Basis und OOS haben keine direkte Trade-Überlappung.
+
+Vollständige Kennzahlen, Ablationen, Sensitivität, Einzeldaten und Einschränkungen stehen in `MRWAGWAN_HYBRID_RESULTS.md`, `MRWAGWAN_ABLATION_RESULTS.md` und `MRWAGWAN_HYBRID_BACKTESTS.json`.
 <!-- GENERATED_RESULTS_END -->

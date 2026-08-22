@@ -1,0 +1,880 @@
+{
+  "generatedAt": "2026-08-22T15:51:56.197Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "data.manifest.count",
+      "status": "PASS",
+      "details": {
+        "actual": 5,
+        "expected": 5
+      }
+    },
+    {
+      "id": "data.XAUUSD.sha256",
+      "status": "PASS",
+      "details": {
+        "actual": "593d59bdce5554f6076dffc390cbdc5b88161d85c5b04746ecc2b66c3b4cfcd9",
+        "expected": "593d59bdce5554f6076dffc390cbdc5b88161d85c5b04746ecc2b66c3b4cfcd9"
+      }
+    },
+    {
+      "id": "data.XAUUSD.minimumBars",
+      "status": "PASS",
+      "details": {
+        "bars": 354386
+      }
+    },
+    {
+      "id": "data.XAUUSD.calendarCoverage",
+      "status": "PASS",
+      "details": {
+        "distinctUtcDays": 312,
+        "required": 240
+      }
+    },
+    {
+      "id": "data.XAUUSD.rangeCoverage",
+      "status": "PASS",
+      "details": {
+        "firstUtc": "2024-08-01T00:00:00.000Z",
+        "lastUtc": "2025-07-31T23:59:00.000Z"
+      }
+    },
+    {
+      "id": "data.XAUUSD.ordering",
+      "status": "PASS",
+      "details": {
+        "unsorted": 0,
+        "duplicates": 0
+      }
+    },
+    {
+      "id": "data.XAUUSD.spreadNonnegative",
+      "status": "PASS",
+      "details": {
+        "negativeSpread": 0
+      }
+    },
+    {
+      "id": "data.XAUUSD.ohlcGeometry",
+      "status": "PASS",
+      "details": {
+        "invalidOhlc": 0
+      }
+    },
+    {
+      "id": "data.XAUUSD.minuteAligned",
+      "status": "PASS",
+      "details": {
+        "unaligned": 0
+      }
+    },
+    {
+      "id": "data.BTCUSD.sha256",
+      "status": "PASS",
+      "details": {
+        "actual": "d713681fcebdab8a7e395b1eb8e6bdc935b9fbd14cb95950ead8da3d375d19fd",
+        "expected": "d713681fcebdab8a7e395b1eb8e6bdc935b9fbd14cb95950ead8da3d375d19fd"
+      }
+    },
+    {
+      "id": "data.BTCUSD.minimumBars",
+      "status": "PASS",
+      "details": {
+        "bars": 522779
+      }
+    },
+    {
+      "id": "data.BTCUSD.calendarCoverage",
+      "status": "PASS",
+      "details": {
+        "distinctUtcDays": 365,
+        "required": 240
+      }
+    },
+    {
+      "id": "data.BTCUSD.rangeCoverage",
+      "status": "PASS",
+      "details": {
+        "firstUtc": "2024-08-01T00:00:00.000Z",
+        "lastUtc": "2025-07-31T23:59:00.000Z"
+      }
+    },
+    {
+      "id": "data.BTCUSD.ordering",
+      "status": "PASS",
+      "details": {
+        "unsorted": 0,
+        "duplicates": 0
+      }
+    },
+    {
+      "id": "data.BTCUSD.spreadNonnegative",
+      "status": "PASS",
+      "details": {
+        "negativeSpread": 0
+      }
+    },
+    {
+      "id": "data.BTCUSD.ohlcGeometry",
+      "status": "PASS",
+      "details": {
+        "invalidOhlc": 0
+      }
+    },
+    {
+      "id": "data.BTCUSD.minuteAligned",
+      "status": "PASS",
+      "details": {
+        "unaligned": 0
+      }
+    },
+    {
+      "id": "data.NASDAQ.sha256",
+      "status": "PASS",
+      "details": {
+        "actual": "0a62fa5448897e932af7fe292a1cbe45a92a53543fbf019c9ac19b14f0d09c75",
+        "expected": "0a62fa5448897e932af7fe292a1cbe45a92a53543fbf019c9ac19b14f0d09c75"
+      }
+    },
+    {
+      "id": "data.NASDAQ.minimumBars",
+      "status": "PASS",
+      "details": {
+        "bars": 340763
+      }
+    },
+    {
+      "id": "data.NASDAQ.calendarCoverage",
+      "status": "PASS",
+      "details": {
+        "distinctUtcDays": 312,
+        "required": 240
+      }
+    },
+    {
+      "id": "data.NASDAQ.rangeCoverage",
+      "status": "PASS",
+      "details": {
+        "firstUtc": "2024-08-01T00:00:00.000Z",
+        "lastUtc": "2025-07-31T23:59:00.000Z"
+      }
+    },
+    {
+      "id": "data.NASDAQ.ordering",
+      "status": "PASS",
+      "details": {
+        "unsorted": 0,
+        "duplicates": 0
+      }
+    },
+    {
+      "id": "data.NASDAQ.spreadNonnegative",
+      "status": "PASS",
+      "details": {
+        "negativeSpread": 0
+      }
+    },
+    {
+      "id": "data.NASDAQ.ohlcGeometry",
+      "status": "PASS",
+      "details": {
+        "invalidOhlc": 0
+      }
+    },
+    {
+      "id": "data.NASDAQ.minuteAligned",
+      "status": "PASS",
+      "details": {
+        "unaligned": 0
+      }
+    },
+    {
+      "id": "data.SP500.sha256",
+      "status": "PASS",
+      "details": {
+        "actual": "b5a9dba3518e4a3b6b692c4b873a665c4a9bcc28252e72a4136cb9f78a39d1cf",
+        "expected": "b5a9dba3518e4a3b6b692c4b873a665c4a9bcc28252e72a4136cb9f78a39d1cf"
+      }
+    },
+    {
+      "id": "data.SP500.minimumBars",
+      "status": "PASS",
+      "details": {
+        "bars": 339099
+      }
+    },
+    {
+      "id": "data.SP500.calendarCoverage",
+      "status": "PASS",
+      "details": {
+        "distinctUtcDays": 312,
+        "required": 240
+      }
+    },
+    {
+      "id": "data.SP500.rangeCoverage",
+      "status": "PASS",
+      "details": {
+        "firstUtc": "2024-08-01T00:00:00.000Z",
+        "lastUtc": "2025-07-31T23:59:00.000Z"
+      }
+    },
+    {
+      "id": "data.SP500.ordering",
+      "status": "PASS",
+      "details": {
+        "unsorted": 0,
+        "duplicates": 0
+      }
+    },
+    {
+      "id": "data.SP500.spreadNonnegative",
+      "status": "PASS",
+      "details": {
+        "negativeSpread": 0
+      }
+    },
+    {
+      "id": "data.SP500.ohlcGeometry",
+      "status": "PASS",
+      "details": {
+        "invalidOhlc": 0
+      }
+    },
+    {
+      "id": "data.SP500.minuteAligned",
+      "status": "PASS",
+      "details": {
+        "unaligned": 0
+      }
+    },
+    {
+      "id": "data.EURUSD.sha256",
+      "status": "PASS",
+      "details": {
+        "actual": "a561b92cbe6c262d441f33c54af4652285ee2ef9649f26d13186d4d3b21e2082",
+        "expected": "a561b92cbe6c262d441f33c54af4652285ee2ef9649f26d13186d4d3b21e2082"
+      }
+    },
+    {
+      "id": "data.EURUSD.minimumBars",
+      "status": "PASS",
+      "details": {
+        "bars": 365122
+      }
+    },
+    {
+      "id": "data.EURUSD.calendarCoverage",
+      "status": "PASS",
+      "details": {
+        "distinctUtcDays": 313,
+        "required": 240
+      }
+    },
+    {
+      "id": "data.EURUSD.rangeCoverage",
+      "status": "PASS",
+      "details": {
+        "firstUtc": "2024-08-01T00:00:00.000Z",
+        "lastUtc": "2025-07-31T23:59:00.000Z"
+      }
+    },
+    {
+      "id": "data.EURUSD.ordering",
+      "status": "PASS",
+      "details": {
+        "unsorted": 0,
+        "duplicates": 0
+      }
+    },
+    {
+      "id": "data.EURUSD.minuteAligned",
+      "status": "PASS",
+      "details": {
+        "unaligned": 0
+      }
+    },
+    {
+      "id": "data.XAUUSD.officialWidgetCsvExact",
+      "status": "PASS",
+      "details": {
+        "widgetRows": 1380,
+        "decodedRows": 1380,
+        "mismatches": 0
+      }
+    },
+    {
+      "id": "data.EURUSD.officialWidgetCsvExactAnomalyWindow",
+      "status": "PASS",
+      "details": {
+        "comparisons": [
+          {
+            "day": "2024-10-09",
+            "side": "BID",
+            "widgetRows": 1437,
+            "decodedRows": 1437,
+            "mismatches": 0
+          },
+          {
+            "day": "2024-10-09",
+            "side": "ASK",
+            "widgetRows": 1437,
+            "decodedRows": 1437,
+            "mismatches": 0
+          },
+          {
+            "day": "2024-10-10",
+            "side": "BID",
+            "widgetRows": 1432,
+            "decodedRows": 1432,
+            "mismatches": 0
+          },
+          {
+            "day": "2024-10-10",
+            "side": "ASK",
+            "widgetRows": 1432,
+            "decodedRows": 1432,
+            "mismatches": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "data.EURUSD.spreadIntegrityOrVerifiedSourceException",
+      "status": "PASS",
+      "details": {
+        "negativeSpread": 164,
+        "outsideDocumentedWindow": 0,
+        "officialWidgetExact": true
+      }
+    },
+    {
+      "id": "data.EURUSD.ohlcIntegrityOrVerifiedSourceException",
+      "status": "PASS",
+      "details": {
+        "invalidOhlc": 774,
+        "outsideDocumentedWindow": 0,
+        "officialWidgetExact": true
+      }
+    },
+    {
+      "id": "selection.phase1.hash",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "selection.phase1.trials.hash",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "selection.oos.boundary",
+      "status": "PASS",
+      "details": {
+        "actual": "2025-05-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "selection.config.id",
+      "status": "PASS",
+      "details": {
+        "phase1": "BASE_HYBRID_PREREG_1_0",
+        "freeze": "BASE_HYBRID_PREREG_1_0"
+      }
+    },
+    {
+      "id": "selection.input.strategy.hash",
+      "status": "PASS",
+      "details": {
+        "actual": "5dc174d79936bec10406c91052054209f12682bf2eeb55741e25720d294ec0a4",
+        "expected": "5dc174d79936bec10406c91052054209f12682bf2eeb55741e25720d294ec0a4"
+      }
+    },
+    {
+      "id": "selection.input.backtestCore.hash",
+      "status": "PASS",
+      "details": {
+        "actual": "4e603cae1abaef9989998495fd9f91769c61a574d3194e94c14a5c33f8ace8c6",
+        "expected": "4e603cae1abaef9989998495fd9f91769c61a574d3194e94c14a5c33f8ace8c6"
+      }
+    },
+    {
+      "id": "selection.input.newsRegistry.hash",
+      "status": "PASS",
+      "details": {
+        "actual": "a7f4d1b36310f10ba537ef30209d7d347c4fc3aeb064d46f1e76b7a73d78c137",
+        "expected": "a7f4d1b36310f10ba537ef30209d7d347c4fc3aeb064d46f1e76b7a73d78c137"
+      }
+    },
+    {
+      "id": "selection.input.dataManifest.hash",
+      "status": "PASS",
+      "details": {
+        "actual": "cc42e7d5895f4f8ea0f317f907a7249828a3d0723a9ad1d6267ea82ae9e44cde",
+        "expected": "cc42e7d5895f4f8ea0f317f907a7249828a3d0723a9ad1d6267ea82ae9e44cde"
+      }
+    },
+    {
+      "id": "selection.oos.executionMarker",
+      "status": "PASS",
+      "details": {
+        "marker": {
+          "executedAt": "2026-08-22T15:41:03.042Z",
+          "repositorySourceCommit": "1564d5a1cec61ceef32dc772fd695b20e2637a89",
+          "selectedConfigId": "BASE_HYBRID_PREREG_1_0",
+          "finalOosTrades": 23,
+          "outputSha256": "afe6ac708d0758c547caac6f028ad15ee4d5a945a68a077c7519d70deab01b45",
+          "assertion": "The phase-2 script refuses another final-OOS run while this marker exists."
+        }
+      }
+    },
+    {
+      "id": "backtest.selectedVariant.noDirectEurSourceAnomalyOverlap",
+      "status": "PASS",
+      "details": {
+        "tradeIds": []
+      }
+    },
+    {
+      "id": "backtest.finalOos.noEurSourceAnomalyOverlap",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.minimumTotal",
+      "status": "PASS",
+      "details": {
+        "actual": 2998,
+        "required": 1000,
+        "definition": "All fully simulated IS/WF candidate/ablation trades plus the frozen selected variant final-OOS trades. Correlated variants are test coverage, not independent performance observations."
+      }
+    },
+    {
+      "id": "backtest.XAUUSD.minimum200",
+      "status": "PASS",
+      "details": {
+        "actual": 563,
+        "required": 200
+      }
+    },
+    {
+      "id": "backtest.BTCUSD.minimum200",
+      "status": "PASS",
+      "details": {
+        "actual": 680,
+        "required": 200
+      }
+    },
+    {
+      "id": "backtest.NASDAQ.minimum200",
+      "status": "PASS",
+      "details": {
+        "actual": 592,
+        "required": 200
+      }
+    },
+    {
+      "id": "backtest.SP500.minimum200",
+      "status": "PASS",
+      "details": {
+        "actual": 455,
+        "required": 200
+      }
+    },
+    {
+      "id": "backtest.EURUSD.minimum200",
+      "status": "PASS",
+      "details": {
+        "actual": 708,
+        "required": 200
+      }
+    },
+    {
+      "id": "backtest.tradeIdsUnique",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.testIdsUnique",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.frozenVersion",
+      "status": "PASS",
+      "details": {
+        "selected": "BASE_HYBRID_PREREG_1_0"
+      }
+    },
+    {
+      "id": "backtest.noOutsideSessions",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.noCrossSession",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.stopGeometry",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.finiteR",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.chronological",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.hasFinalOos",
+      "status": "PASS",
+      "details": {
+        "oosTrades": 23
+      }
+    },
+    {
+      "id": "backtest.requiredTradeFields",
+      "status": "PASS",
+      "details": {
+        "requiredTradeFields": [
+          "tradeId",
+          "market",
+          "feed",
+          "dateEuropeBerlin",
+          "session",
+          "direction",
+          "context1h",
+          "context15m",
+          "context5m",
+          "context1m",
+          "entry",
+          "sl",
+          "tp1",
+          "tp2",
+          "tp3",
+          "plannedRR",
+          "actualR",
+          "winLossBreakEven",
+          "holdingDurationMinutes",
+          "mfeR",
+          "maeR",
+          "liquidityClass",
+          "mss",
+          "choch",
+          "bos",
+          "displacementAtr",
+          "fvgPresent",
+          "orderBlock",
+          "premiumDiscount",
+          "costs",
+          "ruleVersion",
+          "researchSplit"
+        ]
+      }
+    },
+    {
+      "id": "backtest.researchTrials.requiredTradeFields",
+      "status": "PASS",
+      "details": {
+        "requiredResearchTrialFields": [
+          "market",
+          "feed",
+          "dateEuropeBerlin",
+          "session",
+          "direction",
+          "context1h",
+          "context15m",
+          "context5m",
+          "context1m",
+          "entry",
+          "sl",
+          "tp1",
+          "tp2",
+          "tp3",
+          "plannedRR",
+          "actualR",
+          "winLossBreakEven",
+          "holdingDurationMinutes",
+          "mfeR",
+          "maeR",
+          "liquidityClass",
+          "mss",
+          "choch",
+          "bos",
+          "displacementAtr",
+          "fvgPresent",
+          "orderBlock",
+          "premiumDiscount",
+          "costs",
+          "ruleVersion",
+          "researchSplit"
+        ]
+      }
+    },
+    {
+      "id": "backtest.researchTrials.chronological",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.researchTrialCountsConsistent",
+      "status": "PASS",
+      "details": {
+        "totalTests": 2998,
+        "actual": 2998
+      }
+    },
+    {
+      "id": "backtest.validSplits",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.oosBoundaryConsistent",
+      "status": "PASS",
+      "details": {}
+    },
+    {
+      "id": "backtest.metricCountConsistent",
+      "status": "PASS",
+      "details": {
+        "jsonTrades": 88,
+        "summaryTrades": 88
+      }
+    },
+    {
+      "id": "backtest.XAUUSD.noOverlap",
+      "status": "PASS",
+      "details": {
+        "overlaps": 0
+      }
+    },
+    {
+      "id": "backtest.BTCUSD.noOverlap",
+      "status": "PASS",
+      "details": {
+        "overlaps": 0
+      }
+    },
+    {
+      "id": "backtest.NASDAQ.noOverlap",
+      "status": "PASS",
+      "details": {
+        "overlaps": 0
+      }
+    },
+    {
+      "id": "backtest.SP500.noOverlap",
+      "status": "PASS",
+      "details": {
+        "overlaps": 0
+      }
+    },
+    {
+      "id": "backtest.EURUSD.noOverlap",
+      "status": "PASS",
+      "details": {
+        "overlaps": 0
+      }
+    },
+    {
+      "id": "artifact.VIDEO_STRATEGY_EXTRACTION.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 14600
+      }
+    },
+    {
+      "id": "artifact.VIDEO_VS_MRWAGWAN_COMPARISON.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 10925
+      }
+    },
+    {
+      "id": "artifact.MRWAGWAN_HYBRID_STRATEGY.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 17043
+      }
+    },
+    {
+      "id": "artifact.MRWAGWAN_HYBRID_BACKTESTS.json",
+      "status": "PASS",
+      "details": {
+        "bytes": 12163604
+      }
+    },
+    {
+      "id": "artifact.MRWAGWAN_HYBRID_RESULTS.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 8842
+      }
+    },
+    {
+      "id": "artifact.MRWAGWAN_ABLATION_RESULTS.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 5520
+      }
+    },
+    {
+      "id": "artifact.MRWAGWAN_MARKET_COMPARISON.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 1508
+      }
+    },
+    {
+      "id": "artifact.MRWAGWAN_RESEARCH_LOG.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 5888
+      }
+    },
+    {
+      "id": "artifact.SOURCE_DATA_ANOMALY_AUDIT.md",
+      "status": "PASS",
+      "details": {
+        "bytes": 2504
+      }
+    },
+    {
+      "id": "artifact.strategy.generatedResults",
+      "status": "PASS",
+      "details": {}
+    }
+  ],
+  "failures": [],
+  "warnings": [
+    {
+      "id": "data.EURUSD.officialSourceAnomaly",
+      "details": {
+        "windowUtc": [
+          "2024-10-09T23:09:00Z",
+          "2024-10-10T23:59:00Z"
+        ],
+        "negativeSpreadBars": 164,
+        "invalidOhlcBars": 774,
+        "evidence": [
+          {
+            "day": "2024-10-09",
+            "side": "BID",
+            "widgetRows": 1437,
+            "decodedRows": 1437,
+            "mismatches": 0
+          },
+          {
+            "day": "2024-10-09",
+            "side": "ASK",
+            "widgetRows": 1437,
+            "decodedRows": 1437,
+            "mismatches": 0
+          },
+          {
+            "day": "2024-10-10",
+            "side": "BID",
+            "widgetRows": 1432,
+            "decodedRows": 1432,
+            "mismatches": 0
+          },
+          {
+            "day": "2024-10-10",
+            "side": "ASK",
+            "widgetRows": 1432,
+            "decodedRows": 1432,
+            "mismatches": 0
+          }
+        ],
+        "handling": "Retained byte-for-byte for source fidelity; not silently repaired. See SOURCE_DATA_ANOMALY_AUDIT.md."
+      }
+    },
+    {
+      "id": "backtest.researchTrials.eurSourceAnomalyOverlap",
+      "details": {
+        "count": 2,
+        "testIds": [
+          "TEST-000717",
+          "TEST-000723"
+        ],
+        "note": "Development/diagnostic coverage only; do not interpret these trials as clean independent evidence."
+      }
+    }
+  ],
+  "dataAudit": {
+    "XAUUSD": {
+      "bars": 354386,
+      "distinctUtcDays": 312,
+      "firstUtc": "2024-08-01T00:00:00.000Z",
+      "lastUtc": "2025-07-31T23:59:00.000Z",
+      "unsorted": 0,
+      "duplicates": 0,
+      "negativeSpread": 0,
+      "invalidOhlc": 0,
+      "unaligned": 0,
+      "maxGapMin": 4382,
+      "gapsOver60": 259
+    },
+    "BTCUSD": {
+      "bars": 522779,
+      "distinctUtcDays": 365,
+      "firstUtc": "2024-08-01T00:00:00.000Z",
+      "lastUtc": "2025-07-31T23:59:00.000Z",
+      "unsorted": 0,
+      "duplicates": 0,
+      "negativeSpread": 0,
+      "invalidOhlc": 0,
+      "unaligned": 0,
+      "maxGapMin": 1387,
+      "gapsOver60": 5
+    },
+    "NASDAQ": {
+      "bars": 340763,
+      "distinctUtcDays": 312,
+      "firstUtc": "2024-08-01T00:00:00.000Z",
+      "lastUtc": "2025-07-31T23:59:00.000Z",
+      "unsorted": 0,
+      "duplicates": 0,
+      "negativeSpread": 0,
+      "invalidOhlc": 0,
+      "unaligned": 0,
+      "maxGapMin": 4432,
+      "gapsOver60": 260
+    },
+    "SP500": {
+      "bars": 339099,
+      "distinctUtcDays": 312,
+      "firstUtc": "2024-08-01T00:00:00.000Z",
+      "lastUtc": "2025-07-31T23:59:00.000Z",
+      "unsorted": 0,
+      "duplicates": 0,
+      "negativeSpread": 0,
+      "invalidOhlc": 0,
+      "unaligned": 0,
+      "maxGapMin": 4427,
+      "gapsOver60": 259
+    },
+    "EURUSD": {
+      "bars": 365122,
+      "distinctUtcDays": 313,
+      "firstUtc": "2024-08-01T00:00:00.000Z",
+      "lastUtc": "2025-07-31T23:59:00.000Z",
+      "unsorted": 0,
+      "duplicates": 0,
+      "negativeSpread": 164,
+      "invalidOhlc": 774,
+      "unaligned": 0,
+      "maxGapMin": 2941,
+      "gapsOver60": 59
+    }
+  }
+}

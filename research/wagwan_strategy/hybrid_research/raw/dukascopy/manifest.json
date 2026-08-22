@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-08-22T14:17:25.798Z",
+  "source": "Dukascopy Bank JETTA public historical feed used by the official Historical Data Export widget",
+  "sourcePage": "https://www.dukascopy.com/swiss/english/marketwatch/historical/",
+  "widget": "https://widgets.dukascopy.com/en/historical-data-export",
+  "endpointBase": "https://jetta.dukascopy.com/v1",
+  "endpointPattern": "/candles/minute/{instrument}/{BID|ASK}/{year}/{month}/{day}",
+  "acquisition": {
+    "serial": true,
+    "requestDelayMs": 900,
+    "resumableDailyCache": true
+  },
+  "rangeUtc": {
+    "from": "2024-08-01T00:00:00.000Z",
+    "toExclusive": "2025-08-01T00:00:00.000Z"
+  },
+  "timeframe": "1m",
+  "priceSides": [
+    "BID",
+    "ASK"
+  ],
+  "schema": [
+    "timestampMs",
+    "bidOpen",
+    "bidHigh",
+    "bidLow",
+    "bidClose",
+    "askOpen",
+    "askHigh",
+    "askLow",
+    "askClose",
+    "bidVolume",
+    "askVolume"
+  ],
+  "instruments": [
+    {
+      "market": "XAUUSD",
+      "code": "XAU-USD",
+      "label": "XAU/USD",
+      "proxy": false,
+      "filename": "XAUUSD_2024-08-01_2025-08-01_1m_bid_ask.json.gz",
+      "bidBars": 354386,
+      "askBars": 354386,
+      "mergedBars": 354386,
+      "firstTimestampMs": 1722470400000,
+      "lastTimestampMs": 1754006340000,
+      "compressedBytes": 9507831,
+      "sha256": "593d59bdce5554f6076dffc390cbdc5b88161d85c5b04746ecc2b66c3b4cfcd9",
+      "durationMs": 867711
+    },
+    {
+      "market": "BTCUSD",
+      "code": "BTC-USD",
+      "label": "BTC/USD",
+      "proxy": false,
+      "filename": "BTCUSD_2024-08-01_2025-08-01_1m_bid_ask.json.gz",
+      "bidBars": 522779,
+      "askBars": 522779,
+      "mergedBars": 522779,
+      "firstTimestampMs": 1722470400000,
+      "lastTimestampMs": 1754006340000,
+      "compressedBytes": 13387290,
+      "sha256": "d713681fcebdab8a7e395b1eb8e6bdc935b9fbd14cb95950ead8da3d375d19fd",
+      "durationMs": 1161550
+    },
+    {
+      "market": "NASDAQ",
+      "code": "USATECH.IDX-USD",
+      "label": "USATECH.IDX/USD",
+      "proxy": true,
+      "filename": "NASDAQ_2024-08-01_2025-08-01_1m_bid_ask.json.gz",
+      "bidBars": 340763,
+      "askBars": 340763,
+      "mergedBars": 340763,
+      "firstTimestampMs": 1722470400000,
+      "lastTimestampMs": 1754006340000,
+      "compressedBytes": 10705951,
+      "sha256": "0a62fa5448897e932af7fe292a1cbe45a92a53543fbf019c9ac19b14f0d09c75",
+      "durationMs": 891111
+    },
+    {
+      "market": "SP500",
+      "code": "USA500.IDX-USD",
+      "label": "USA500.IDX/USD",
+      "proxy": true,
+      "filename": "SP500_2024-08-01_2025-08-01_1m_bid_ask.json.gz",
+      "bidBars": 339099,
+      "askBars": 339099,
+      "mergedBars": 339099,
+      "firstTimestampMs": 1722470400000,
+      "lastTimestampMs": 1754006340000,
+      "compressedBytes": 8824387,
+      "sha256": "b5a9dba3518e4a3b6b692c4b873a665c4a9bcc28252e72a4136cb9f78a39d1cf",
+      "durationMs": 851368
+    },
+    {
+      "market": "EURUSD",
+      "code": "EUR-USD",
+      "label": "EUR/USD",
+      "proxy": false,
+      "filename": "EURUSD_2024-08-01_2025-08-01_1m_bid_ask.json.gz",
+      "bidBars": 365122,
+      "askBars": 365122,
+      "mergedBars": 365122,
+      "firstTimestampMs": 1722470400000,
+      "lastTimestampMs": 1754006340000,
+      "compressedBytes": 7610246,
+      "sha256": "a561b92cbe6c262d441f33c54af4652285ee2ef9649f26d13186d4d3b21e2082",
+      "durationMs": 1132896
+    }
+  ]
+}
