@@ -54,6 +54,8 @@ const phase1Raw = await readFile(new URL('generated/phase1_ablation.json', ROOT)
 const phase1 = JSON.parse(phase1Raw);
 const freeze = JSON.parse(await readFile(new URL('generated/selected_config_freeze.json', ROOT), 'utf8'));
 check('selection.phase1.hash', createHash('sha256').update(phase1Raw).digest('hex') === freeze.phase1Sha256, {});
+const phase1TrialsRaw = await readFile(new URL('generated/phase1_trial_trades.json', ROOT));
+check('selection.phase1.trials.hash', createHash('sha256').update(phase1TrialsRaw).digest('hex') === freeze.phase1TrialsSha256, {});
 check('selection.oos.boundary', freeze.oosStartUtc === '2025-05-01T00:00:00.000Z', { actual: freeze.oosStartUtc });
 check('selection.config.id', phase1.selectedConfigId === freeze.selectedConfig.id, { phase1: phase1.selectedConfigId, freeze: freeze.selectedConfig.id });
 const frozenInputs = {
@@ -71,9 +73,11 @@ for (const [name, url] of Object.entries(frozenInputs)) {
 
 const final = JSON.parse(await readFile(new URL('MRWAGWAN_HYBRID_BACKTESTS.json', ROOT), 'utf8'));
 const trades = final.trades; const markets = ['XAUUSD', 'BTCUSD', 'NASDAQ', 'SP500', 'EURUSD'];
-check('backtest.minimumTotal', trades.length >= 1000, { actual: trades.length, required: 1000 });
-for (const market of markets) check(`backtest.${market}.minimum200`, trades.filter((t) => t.market === market).length >= 200, { actual: trades.filter((t) => t.market === market).length, required: 200 });
+const researchTrials = final.researchTrials ?? [];
+check('backtest.minimumTotal', researchTrials.length >= 1000, { actual: researchTrials.length, required: 1000, definition: final.researchTrialSummary?.definition });
+for (const market of markets) check(`backtest.${market}.minimum200`, researchTrials.filter((t) => t.market === market).length >= 200, { actual: researchTrials.filter((t) => t.market === market).length, required: 200 });
 check('backtest.tradeIdsUnique', new Set(trades.map((t) => t.tradeId)).size === trades.length, {});
+check('backtest.testIdsUnique', new Set(researchTrials.map((t) => t.testId)).size === researchTrials.length, {});
 check('backtest.frozenVersion', trades.every((t) => t.ruleVersion === freeze.selectedConfig.id), { selected: freeze.selectedConfig.id });
 check('backtest.noOutsideSessions', trades.every((t) => ['Asia', 'London', 'NewYork'].includes(t.session)), {});
 check('backtest.noCrossSession', trades.every((t) => t.sessionKey && t.durationMinutes > 0 && t.durationMinutes <= 420), {});
@@ -89,6 +93,10 @@ const requiredTradeFields = [
   'premiumDiscount', 'costs', 'ruleVersion', 'researchSplit',
 ];
 check('backtest.requiredTradeFields', trades.every((t) => requiredTradeFields.every((key) => Object.hasOwn(t, key))), { requiredTradeFields });
+const requiredResearchTrialFields = requiredTradeFields.filter((key) => key !== 'tradeId');
+check('backtest.researchTrials.requiredTradeFields', researchTrials.every((t) => requiredResearchTrialFields.every((key) => Object.hasOwn(t, key)) && Object.hasOwn(t, 'testId') && Object.hasOwn(t, 'researchPhase') && Object.hasOwn(t, 'strategyVariant')), { requiredResearchTrialFields });
+check('backtest.researchTrials.chronological', researchTrials.every((t, i) => i === 0 || t.entryTime >= researchTrials[i - 1].entryTime), {});
+check('backtest.researchTrialCountsConsistent', final.researchTrialSummary?.totalTests === researchTrials.length && markets.every((market) => final.researchTrialSummary?.byMarket?.[market] === researchTrials.filter((t) => t.market === market).length), { totalTests: final.researchTrialSummary?.totalTests, actual: researchTrials.length });
 check('backtest.validSplits', trades.every((t) => ['IS', 'WF', 'OOS'].includes(t.researchSplit)), {});
 check('backtest.oosBoundaryConsistent', trades.every((t) => t.researchSplit === (t.entryTime < Date.parse('2025-02-01T00:00:00Z') ? 'IS' : t.entryTime < Date.parse('2025-05-01T00:00:00Z') ? 'WF' : 'OOS')), {});
 check('backtest.metricCountConsistent', final.summary.all.trades === trades.length && final.summary.finalOos.trades === trades.filter((t) => t.researchSplit === 'OOS').length, { jsonTrades: trades.length, summaryTrades: final.summary.all.trades });

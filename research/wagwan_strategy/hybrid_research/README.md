@@ -11,7 +11,7 @@ Dieses Verzeichnis enthält nur Analyse-, Download- und Backtestcode. Es erzeugt
 - `VIDEO_STRATEGY_EXTRACTION.md`: vollständige, zeitgestempelte Videoextraktion
 - `VIDEO_VS_MRWAGWAN_COMPARISON.md`: KEEP/ADD/TEST/REJECT-Matrix
 - `MRWAGWAN_HYBRID_STRATEGY.md`: vorab festgeschriebene mechanische Regeln
-- `MRWAGWAN_HYBRID_BACKTESTS.json`: detaillierte Trades und Statistiken der eingefrorenen Variante
+- `MRWAGWAN_HYBRID_BACKTESTS.json`: alle vollständigen IS/WF-Kandidaten-/Ablationstests, die separaten Trades der eingefrorenen Variante und deren Final-OOS-Statistiken; korrelierte Varianten werden nicht zu einer Performancezahl vermischt
 - `MRWAGWAN_HYBRID_RESULTS.md`: Hauptresultat
 - `MRWAGWAN_ABLATION_RESULTS.md`: IS/WF-Ablationen und Sensitivitäten
 - `MRWAGWAN_MARKET_COMPARISON.md`: marktweiser Final-OOS-Vergleich

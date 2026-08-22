@@ -138,6 +138,8 @@ Zusätzlich wird `MRWAGWAN_V3_REFERENCE_PROXY` berichtet: 0,08-ATR-Sweep nur an 
 
 Diagnostische Parameter-Nachbarschaften (dürfen nie ausgewählt werden): Sweep 0,02/0,04 statt 0,03 ATR, Displacement 0,40/0,60 statt 0,50 ATR und Stop-Puffer 0,10/0,20 statt 0,15 ATR. Sie werden nur auf IS + Walk-forward berechnet, um Klippen und Vorzeichenwechsel sichtbar zu machen.
 
+Nach einem ausschließlich auf XAUUSD-IS/WF durchgeführten Frequenz-Audit wurde vor jedem finalen OOS-Lauf zusätzlich `DIAG_FREQUENCY_SIMPLIFIED_MSS` registriert: kein FVG-Zwang, Market-Entry nach 5m-MSS und keine Gegenliquiditäts-Raumprüfung. Diese Kombination dient nur dazu, den Effekt der drei häufigsten Frequenzbremsen gemeinsam sichtbar zu machen und vollständige Kandidatentests zu erzeugen. Sie ist **diagnosticOnly**, darf nie ausgewählt werden und verändert die Basis- oder Auswahlregel nicht.
+
 Keine unregistrierte Variante darf Final OOS beeinflussen.
 
 ### 9.1 Vorab festgelegte Auswahlregel
@@ -146,7 +148,7 @@ Die Basis bleibt automatisch ausgewählt. Eine einzelne Ablation darf sie nur er
 
 ## 10. Mindestkriterien und Statuslogik
 
-Zielstichprobe: mindestens 1.000 abgeschlossene Trades insgesamt und mindestens 200 je Markt. Diese Zahl ist ein Stabilitätsziel, kein Anlass zum künstlichen Erzeugen von Trades.
+Zielstichprobe: mindestens 1.000 abgeschlossene Research-Tests insgesamt und mindestens 200 je Markt. Ein Research-Test ist ein vollständig simulierter Kandidaten-/Ablationstrade aus IS/WF oder ein Trade der eingefrorenen Variante im finalen OOS. Varianten auf derselben Marktbewegung sind korreliert und dürfen deshalb **nicht** zu einem gemeinsamen Performance-Erwartungswert vermischt werden. Die finale Strategieleistung wird ausschließlich für die ausgewählte Variante separat ausgewiesen. Diese Zahl ist ein Testabdeckungsziel, kein Anlass zum künstlichen Erzeugen oder als unabhängig Ausgeben korrelierter Trades.
 
 Eine Variante kann nur **promising** heißen, wenn im Final OOS:
 

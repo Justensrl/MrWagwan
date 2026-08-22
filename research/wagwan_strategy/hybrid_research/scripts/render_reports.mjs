@@ -18,8 +18,9 @@ const totalPositiveR = marketPositiveR.reduce((a, b) => a + b, 0);
 const maxContribution = totalPositiveR > 0 ? Math.max(...marketPositiveR) / totalPositiveR : 1;
 const oos = final.summary.finalOos;
 const promising = oos.expectancyR > 0 && oos.profitFactor > 1.05 && nonNegative >= 3 && maxContribution <= 0.60;
-const minTotal = final.summary.all.trades >= 1000;
-const minEach = Object.values(final.summary.perMarket).every((x) => x.all.trades >= 200);
+const trialSummary = final.researchTrialSummary;
+const minTotal = trialSummary.totalTests >= 1000;
+const minEach = Object.values(trialSummary.byMarket).every((count) => count >= 200);
 const strategyStatus = promising ? 'PROMISING – MORE DATA REQUIRED' : 'NOT VALIDATED';
 
 const results = `# MrWagwan Hybrid — Backtest-Ergebnisse
@@ -34,6 +35,14 @@ Status: **${strategyStatus}**
 ${promising ? 'Die vorab eingefrorene Variante erfüllt die preregistrierten OOS-Mindestbedingungen. Das ist ein Research-Signal, keine Handelsfreigabe.' : 'Die vorab eingefrorene Variante erfüllt die preregistrierten OOS-Mindestbedingungen nicht. Es gibt damit keinen belastbaren Nachweis eines handelbaren Vorteils.'}
 
 Der Backtest verwendet historische 1m-Bid-/Ask-Kerzen, adverse Slippage, Stop-first bei intraminütiger Ambiguität, exakt abgegrenzte Berlin-Sessions und einen einmaligen finalen OOS-Lauf. NASDAQ/SP500 sind Dukascopy-CFD-Proxys, nicht CME NQ/ES.
+
+## Research-Testabdeckung
+
+Es wurden **${trialSummary.totalTests} vollständige Tests** gespeichert: ${trialSummary.isWfCandidateTests} IS/WF-Kandidaten-/Ablationstrades und ${trialSummary.finalFrozenOosTests} Trades der eingefrorenen Variante im finalen OOS. Varianten auf derselben Marktbewegung sind korreliert; diese Zahl belegt Testabdeckung und darf nicht als unabhängige Gesamtperformance interpretiert werden.
+
+| Markt | vollständige Research-Tests |
+|---|---:|
+${Object.entries(trialSummary.byMarket).map(([market, count]) => `| ${market} | ${count} |`).join('\n')}
 
 ## Gesamt und Zeit-Splits
 
@@ -88,8 +97,9 @@ Die kausalere Ein-Regel-Ablation (kein Filter / 30 / 60 / 120 Minuten / ganzer T
 
 | Kriterium | Ergebnis |
 |---|---|
-| >=1.000 Trades gesamt | ${minTotal ? 'PASS' : 'FAIL'} (${final.summary.all.trades}) |
-| >=200 Trades je Markt | ${minEach ? 'PASS' : 'FAIL'} |
+| >=1.000 vollständige Research-Tests | ${minTotal ? 'PASS' : 'FAIL'} (${trialSummary.totalTests}) |
+| >=200 Research-Tests je Markt | ${minEach ? 'PASS' : 'FAIL'} (${Object.entries(trialSummary.byMarket).map(([k, v]) => `${k} ${v}`).join(', ')}) |
+| Trades der final ausgewählten Variante | INFO (${final.summary.all.trades}; nicht künstlich erhöht) |
 | OOS ØR > 0 | ${oos.expectancyR > 0 ? 'PASS' : 'FAIL'} (${n(oos.expectancyR)}R) |
 | OOS PF > 1,05 | ${oos.profitFactor > 1.05 ? 'PASS' : 'FAIL'} (${n(oos.profitFactor)}) |
 | >=3/5 OOS-Märkte nicht-negativ | ${nonNegative >= 3 ? 'PASS' : 'FAIL'} (${nonNegative}/5) |
@@ -148,6 +158,7 @@ Eingefroren wurde **${phase1.selectedConfigId}**. ${phase1.eligibleConfigIds.len
 - **Bias/Countertrend:** \`ABL_NO_H1_BIAS\`, \`ABL_COUNTERTREND\` und \`ABL_H4_BIAS\` testen Kontextregeln getrennt.
 - **News:** \`ABL_NEWS_NONE/30/120/DAY\` verändern nur das Eventfenster relativ zur 60-Minuten-Basis.
 - **Target-Room und V-Reaktion:** testen die beiden direkt aus dem Video abgeleiteten Filter.
+- **Frequenzdiagnose:** \`DIAG_FREQUENCY_SIMPLIFIED_MSS\` kombiniert ausnahmsweise drei Lockerungen (kein FVG-Zwang, Market-Entry, kein Target-Room), ist aber ausdrücklich nicht auswählbar und wird nie zur finalen Performancebehauptung verwendet.
 
 ## Video-Regeln einzeln
 
@@ -163,7 +174,7 @@ Die \`SENS_*\`-Zeilen sind absichtlich nicht auswählbar. Ein Vorzeichenwechsel 
 
 ## Multiple Testing / Overfitting
 
-Es wurden ${phase1.results.length - 1} Abweichungen von der Basis angesehen. Deshalb gilt ein optisch besserer Mittelwert nicht als Beweis. Die Auswahlhürde verlangt einen deutlichen WF-Abstand, Mindeststichprobe, positives IS und marktübergreifende Konsistenz; Ablationen werden nicht kombiniert. Das finale OOS wurde erst nach Hash-Freeze der Auswahl ausgeführt.
+Es wurden ${phase1.results.length - 1} Abweichungen von der Basis angesehen. Deshalb gilt ein optisch besserer Mittelwert nicht als Beweis. Die Auswahlhürde verlangt einen deutlichen WF-Abstand, Mindeststichprobe, positives IS und marktübergreifende Konsistenz; Ablationen werden für die Auswahl nicht kombiniert. Die einzige kombinierte Frequenzdiagnose ist nicht auswählbar. Das finale OOS wurde erst nach Hash-Freeze der Auswahl ausgeführt.
 `;
 
 const ranked = oosMarkets.slice().sort((a, b) => (b.expectancyR ?? -Infinity) - (a.expectancyR ?? -Infinity));
@@ -198,7 +209,7 @@ const log = `# MrWagwan Hybrid — Research Log und Handoff
 5. Offizielle BLS-, Fed- und ECB-Kalender wurden auf einen konservativen Kern ausgewählter Hochrisikoereignisse reduziert; historische DST wurde in UTC-Zeitstempel umgerechnet. Fehlende PCE/GDP/Retail/ISM-Abdeckung ist ausdrücklich dokumentiert.
 6. Zwölf Monate Dukascopy-1m-Bid/Ask-Daten wurden über die offiziellen seriellen JETTA-Tagesendpunkte mit Cache/Retry geladen, zusammengeführt, komprimiert, gehasht und auf Reihenfolge, Duplikate, Umfang und Spread geprüft. Der Decoder wurde am XAU/USD-BID-Tag 2024-08-01 vollständig gegen den offiziellen Widget-CSV-Export verifiziert (1.380 Kerzen, 0 Abweichungen).
 7. Alle Ablationen und Sensitivitäten liefen nur auf IS + Walk-forward. Danach wurde die Auswahl in \`generated/selected_config_freeze.json\` gehasht.
-8. Erst danach lief die eingefrorene Variante auf der finalen OOS-Periode. Alle Trades, Fills, Regeln und Kennzahlen stehen in \`MRWAGWAN_HYBRID_BACKTESTS.json\`.
+8. Erst danach lief die eingefrorene Variante auf der finalen OOS-Periode. Alle ${trialSummary.totalTests} Kandidaten-/Ablations-/OOS-Tests sowie die getrennten Trades der finalen Variante stehen in \`MRWAGWAN_HYBRID_BACKTESTS.json\`.
 9. Der für Phase 1 und OOS verwendete Source-Commit lautet \`${final.frozenSelection.repositorySourceCommit}\`; zusätzliche Eingabedateien sind im Freeze einzeln per SHA-256 gebunden.
 
 ## Daten- und Quellenhinweise
@@ -232,14 +243,15 @@ Die Phase-2-Datei darf nicht vor dem Freeze ausgeführt werden. Änderungen an R
 
 ## Completion Gate
 
-- Stichprobe >=1.000: **${minTotal ? 'PASS' : 'FAIL'}**
-- Je Markt >=200: **${minEach ? 'PASS' : 'FAIL'}**
+- Research-Tests >=1.000: **${minTotal ? 'PASS' : 'FAIL'}** (${trialSummary.totalTests})
+- Research-Tests je Markt >=200: **${minEach ? 'PASS' : 'FAIL'}** (${Object.entries(trialSummary.byMarket).map(([k, v]) => `${k} ${v}`).join(', ')})
+- Trades der final ausgewählten Variante: **${final.summary.all.trades}** (separat, nicht mit Varianten vermischt)
 - Artefakt-/Datenvalidator: **${validation?.status ?? 'noch nicht ausgeführt'}**
 - Strategiestatus: **${strategyStatus}**
 
 ## Handoff für ChatGPT
 
-Verwende ausschließlich die eingefrorene Regelversion **${final.strategyVersion}** und behandle sie als **${strategyStatus}**. Die vollständige Trade-Evidenz steht in \`MRWAGWAN_HYBRID_BACKTESTS.json\`; Videoextraktion, Regelvergleich, Ablationen und Marktvergleich liegen in den gleichnamigen Markdown-Dateien. Keine Live-Order, kein Alert und keine Positionsgrößenempfehlung wurde erzeugt. Entscheidend sind Final-OOS-Erwartungswert ${n(oos.expectancyR)}R, PF ${n(oos.profitFactor)}, ${oos.trades} OOS-Trades und ${nonNegative}/5 nicht-negative OOS-Märkte. NASDAQ/SP500 sind CFD-Proxys, nicht CME-Futures. Bei jeder späteren Änderung neue Regeln preregistrieren und eine neue unberührte OOS-Periode verwenden; niemals dieses OOS nachoptimieren.
+Verwende ausschließlich die eingefrorene Regelversion **${final.strategyVersion}** und behandle sie als **${strategyStatus}**. Die vollständige Evidenz aus ${trialSummary.totalTests} Research-Tests und ${final.summary.all.trades} getrennten Trades der finalen Variante steht in \`MRWAGWAN_HYBRID_BACKTESTS.json\`; korrelierte Varianten niemals zu einer Performancezahl aggregieren. Videoextraktion, Regelvergleich, Ablationen und Marktvergleich liegen in den gleichnamigen Markdown-Dateien. Keine Live-Order, kein Alert und keine Positionsgrößenempfehlung wurde erzeugt. Entscheidend sind Final-OOS-Erwartungswert ${n(oos.expectancyR)}R, PF ${n(oos.profitFactor)}, ${oos.trades} OOS-Trades und ${nonNegative}/5 nicht-negative OOS-Märkte. NASDAQ/SP500 sind CFD-Proxys, nicht CME-Futures. Bei jeder späteren Änderung neue Regeln preregistrieren und eine neue unberührte OOS-Periode verwenden; niemals dieses OOS nachoptimieren.
 `;
 
 const resultAppendix = `<!-- GENERATED_RESULTS_START -->
@@ -248,6 +260,8 @@ const resultAppendix = `<!-- GENERATED_RESULTS_START -->
 Erzeugt: ${final.generatedAt}  
 Eingefrorene Regelversion: \`${final.strategyVersion}\`  
 Status: **${strategyStatus}**
+
+Research-Testabdeckung: **${trialSummary.totalTests} vollständige Tests**, davon ${Object.entries(trialSummary.byMarket).map(([k, v]) => `${k} ${v}`).join(', ')}. Diese Tests enthalten korrelierte Varianten und sind keine gemeinsame Performance-Stichprobe. Die final ausgewählte Variante erzeugte ${final.summary.all.trades} Trades über den Gesamtzeitraum.
 
 | Segment | Trades | Win-Rate | Gesamt-R | Ø R | Profit Factor | Max Drawdown R |
 |---|---:|---:|---:|---:|---:|---:|

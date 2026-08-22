@@ -39,6 +39,7 @@ export const VARIANTS = [
   { ...BASE, id: 'ABL_NEWS_DAY', fullEventDay: true },
   { ...BASE, id: 'ABL_NO_TARGET_SPACE', targetSpaceRequired: false },
   { ...BASE, id: 'ABL_V_REACTION', vReaction: true },
+  { ...BASE, id: 'DIAG_FREQUENCY_SIMPLIFIED_MSS', fvgRequired: false, entryMode: 'market', targetSpaceRequired: false, diagnosticOnly: true },
   { ...BASE, id: 'SENS_SWEEP_002', sweepAtr: 0.02, diagnosticOnly: true },
   { ...BASE, id: 'SENS_SWEEP_004', sweepAtr: 0.04, diagnosticOnly: true },
   { ...BASE, id: 'SENS_DISPLACEMENT_040', displacementAtr: 0.40, diagnosticOnly: true },

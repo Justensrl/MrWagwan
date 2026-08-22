@@ -14,6 +14,9 @@ if (configHash !== freeze.selectedConfigSha256) throw new Error('Selected config
 if (Date.parse(freeze.oosStartUtc) !== OOS_START) throw new Error('OOS boundary mismatch');
 const phase1Raw = await readFile(new URL('phase1_ablation.json', OUT));
 if (createHash('sha256').update(phase1Raw).digest('hex') !== freeze.phase1Sha256) throw new Error('Phase 1 hash mismatch');
+const phase1TrialsRaw = await readFile(new URL('phase1_trial_trades.json', OUT));
+if (createHash('sha256').update(phase1TrialsRaw).digest('hex') !== freeze.phase1TrialsSha256) throw new Error('Phase 1 trial hash mismatch');
+const phase1Trials = JSON.parse(phase1TrialsRaw).trades;
 const preregistrationInputs = {
   strategy: new URL('../MRWAGWAN_HYBRID_STRATEGY.md', import.meta.url),
   backtestCore: new URL('./backtest_core.mjs', import.meta.url),
@@ -50,6 +53,14 @@ allTrades.forEach((t, i) => {
   t.winLossBreakEven = t.result;
 });
 const split = splitTrades(allTrades);
+const finalOosTrials = split.oos.map((t) => ({
+  ...t, researchPhase: 'FINAL_FROZEN_OOS', strategyVariant: t.ruleVersion,
+  testId: null,
+}));
+const researchTrials = [...phase1Trials, ...finalOosTrials]
+  .sort((a, b) => a.entryTime - b.entryTime || a.market.localeCompare(b.market) || a.ruleVersion.localeCompare(b.ruleVersion));
+researchTrials.forEach((t, i) => { t.testId = `TEST-${String(i + 1).padStart(6, '0')}`; });
+const researchTrialCountsByMarket = Object.fromEntries(Object.keys(MARKET_META).map((market) => [market, researchTrials.filter((t) => t.market === market).length]));
 const manifest = JSON.parse(await readFile(new URL('../raw/dukascopy/manifest.json', import.meta.url), 'utf8'));
 const report = {
   schemaVersion: 1, generatedAt: new Date().toISOString(), strategyVersion: freeze.selectedConfig.id,
@@ -63,6 +74,14 @@ const report = {
     byRiskRegime: groupMetrics(allTrades, (t) => t.regime.risk), byMonth: groupMetrics(allTrades, (t) => t.entryTimeUtc.slice(0, 7)),
     byNewsEventDay: groupMetrics(allTrades, (t) => t.newsEventDay ? 'event_day' : 'non_event_day'),
   },
+  researchTrialSummary: {
+    definition: 'All fully simulated IS/WF candidate/ablation trades plus the frozen selected variant final-OOS trades. Correlated variants are test coverage, not independent performance observations.',
+    totalTests: researchTrials.length,
+    byMarket: researchTrialCountsByMarket,
+    isWfCandidateTests: phase1Trials.length,
+    finalFrozenOosTests: finalOosTrials.length,
+  },
+  researchTrials,
   trades: allTrades,
 };
 await writeFile(new URL('../MRWAGWAN_HYBRID_BACKTESTS.json', import.meta.url), `${JSON.stringify(report, null, 2)}\n`, 'utf8');

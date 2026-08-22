@@ -23,7 +23,16 @@ for (const [name, url] of Object.entries(preregistrationInputs)) {
 }
 const events = await loadEvents();
 const results = [];
+const trialTrades = [];
 const seriesByMarket = {};
+
+function enrichTrade(t, researchPhase) {
+  return {
+    ...t, researchPhase, strategyVariant: t.ruleVersion,
+    entryTimeUtc: new Date(t.entryTime).toISOString(), exitTimeUtc: new Date(t.exitTime).toISOString(),
+    sl: t.stop, actualR: t.realizedR, holdingDurationMinutes: t.durationMinutes, winLossBreakEven: t.result,
+  };
+}
 
 for (const market of Object.keys(MARKET_META)) {
   process.stdout.write(`Loading ${market}...\n`);
@@ -37,6 +46,7 @@ for (const config of VARIANTS) {
     const run = backtestMarket(seriesByMarket[market], market, config, events, { end: OOS_START });
     const split = splitTrades(run.trades);
     all.push(...run.trades);
+    trialTrades.push(...run.trades.map((t) => enrichTrade(t, 'IS_WF_CANDIDATE_TRIAL')));
     perMarket[market] = { allDevelopment: metrics(run.trades), is: metrics(split.is), wf: metrics(split.wf) };
     funnels[market] = run.funnel;
   }
@@ -69,8 +79,15 @@ const report = {
   schemaVersion: 1, generatedAt: new Date().toISOString(), phase: 'IS + walk-forward only; final OOS not read by this run',
   boundariesUtc: { isEndExclusive: new Date(IS_END).toISOString(), wfEndExclusive: new Date(OOS_START).toISOString() },
   selectionRule: 'Baseline unless one single non-diagnostic ablation beats baseline WF expectancy by >=0.10R, has positive IS expectancy, >=100 WF trades and >=10/market, and >=3/5 non-negative WF markets; tie by median market WF expectancy.',
-  selectedConfigId: selected.config.id, eligibleConfigIds: eligible.map((r) => r.config.id), results,
+  selectedConfigId: selected.config.id, eligibleConfigIds: eligible.map((r) => r.config.id),
+  trialTradeCount: trialTrades.length,
+  trialCountsByMarket: Object.fromEntries(Object.keys(MARKET_META).map((market) => [market, trialTrades.filter((t) => t.market === market).length])),
+  results,
 };
+trialTrades.sort((a, b) => a.entryTime - b.entryTime || a.market.localeCompare(b.market) || a.ruleVersion.localeCompare(b.ruleVersion));
+trialTrades.forEach((t, i) => { t.testId = `DEV-${String(i + 1).padStart(6, '0')}`; });
+const trialText = `${JSON.stringify({ schemaVersion: 1, generatedAt: new Date().toISOString(), phase: 'IS/WF candidate and ablation trials only; no final OOS', trades: trialTrades }, null, 2)}\n`;
+await writeFile(new URL('phase1_trial_trades.json', OUT), trialText, 'utf8');
 const text = `${JSON.stringify(report, null, 2)}\n`;
 await writeFile(new URL('phase1_ablation.json', OUT), text, 'utf8');
 const phase1Sha256 = createHash('sha256').update(text).digest('hex');
@@ -78,7 +95,8 @@ const configText = JSON.stringify(selected.config);
 const freeze = {
   frozenAt: new Date().toISOString(), selectedConfig: selected.config,
   selectedConfigSha256: createHash('sha256').update(configText).digest('hex'),
-  phase1Sha256, preregistrationInputSha256, repositorySourceCommit, oosStartUtc: new Date(OOS_START).toISOString(),
+  phase1Sha256, phase1TrialsSha256: createHash('sha256').update(trialText).digest('hex'),
+  preregistrationInputSha256, repositorySourceCommit, oosStartUtc: new Date(OOS_START).toISOString(),
   assertion: 'Selection completed without running final OOS in this script.',
 };
 await writeFile(new URL('selected_config_freeze.json', OUT), `${JSON.stringify(freeze, null, 2)}\n`, 'utf8');
