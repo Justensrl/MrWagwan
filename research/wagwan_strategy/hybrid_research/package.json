@@ -1,0 +1,18 @@
+{
+  "name": "mrwagwan-hybrid-research",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible research and backtesting tools for MrWagwan Hybrid Strategy.",
+  "scripts": {
+    "data": "node scripts/download_dukascopy_data.mjs",
+    "phase1": "node scripts/run_phase1_ablation.mjs",
+    "phase2": "node scripts/run_phase2_oos.mjs",
+    "reports": "node scripts/render_reports.mjs",
+    "validate": "node scripts/validate_research.mjs",
+    "test": "node --check scripts/backtest_core.mjs && node --check scripts/run_phase1_ablation.mjs && node --check scripts/run_phase2_oos.mjs && node --check scripts/render_reports.mjs && node --check scripts/validate_research.mjs"
+  },
+  "dependencies": {
+    "dukascopy-node": "^1.50.0"
+  }
+}
