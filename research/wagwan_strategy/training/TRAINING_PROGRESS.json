@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "3.0",
+  "seriesId": "wagwan-replay-v3-reset-2026-08-18",
+  "status": "ARCHIVED – NOT ACTIVE",
+  "archivedAt": "2026-08-25T17:30:00+02:00",
+  "archiveReason": "Strategy replaced by MRWAGWAN ORDERFLOW STRATEGY. This series must not be continued or used for new reviews.",
+  "updatedAt": "2026-08-25T17:30:00+02:00",
+  "timezone": "Europe/Berlin",
+  "protocol": "WAGWAN_REPLAY_TRAINING_PROTOCOL.md",
+  "legacyDataExcluded": true,
+  "decisionPolicy": {
+    "effectiveFromExercise": 2,
+    "historicalTrainingAllowedDecisions": ["long", "short"],
+    "noTradeAllowed": false,
+    "mandatoryFields": [
+      "direction",
+      "entry",
+      "stopLoss",
+      "invalidation",
+      "tp1",
+      "tp2",
+      "tp3FullTp",
+      "plannedRiskToReward",
+      "targetLiquidity",
+      "confirmingMarketStructure",
+      "counterSignals",
+      "reasoning"
+    ],
+    "realTradingDisclaimer": "Die Pflichtentscheidung gilt nur für historische Übungen. Unter realen Bedingungen bleibt No Trade ausdrücklich zulässig."
+  },
+  "teachingAndSelectionPolicy": {
+    "effectiveFromExercise": 3,
+    "roles": {
+      "codex": "analytical_SMC_MrWagwan_coach",
+      "user": "student_and_final_direction_decider"
+    },
+    "allowedTimeframes": ["1H", "15m", "5m", "1m"],
+    "coachSelectsMarketSessionTimeframesSequenceAndLearningObjective": true,
+    "coachCorrectsVisibleDefinitionAndProcessErrors": true,
+    "coachMayRevealDirectionBeforeFreeze": false,
+    "eligiblePreOutcomeSetupGrades": ["A", "A+"],
+    "qualityCheckFrozenBeforeOutcome": true,
+    "exactEntryDecisionReplayCutoffRequired": true,
+    "historicalNewsCheckRequired": true,
+    "historicalNewsFilter": "market_relevant_high_impact_red_folder_only",
+    "postTradeValidationChecklist": "WAGWAN_POST_TRADE_VALIDATION_CHECKLIST.md",
+    "postTradeValidationChecklistSha256": "47794002D447764D6BE6713F76BD296156B26BFBB6904373E225AD2B7CCCD8FB",
+    "aPlusLibrary": "MRWAGWAN_A_PLUS_SETUP_LIBRARY.json",
+    "externalSourceLabelWhenUnverified": "Lehrbeispiel – Profitabilität nicht unabhängig verifiziert."
+  },
+  "resetBaseline": {
+    "startedExercises": 0,
+    "evaluatedExercises": 0,
+    "wins": 0,
+    "losses": 0,
+    "breakEven": 0,
+    "noTrade": 0,
+    "totalR": 0,
+    "winRate": null,
+    "averageR": null,
+    "processScoreAverage0to10": null
+  },
+  "nextExerciseNumber": null,
+  "state": {
+    "activeExercise": null,
+    "replayMustRemainPaused": true,
+    "analysisFrozen": false,
+    "selfAnalysisMode": true,
+    "awaitingCommand": null,
+    "helpCommands": [
+      "Kleiner Hinweis",
+      "Mehr Hilfe",
+      "Erklär mir diesen Step"
+    ],
+    "note": "ARCHIVED – NOT ACTIVE. Exercise 4 was incomplete and must not be resumed. New training starts separately at OF_TRAINING_001."
+  },
+  "statistics": {
+    "evaluatedExercises": 3,
+    "plannedTrades": 3,
+    "noTradeDecisions": 0,
+    "wins": 1,
+    "losses": 2,
+    "breakEven": 0,
+    "totalR": 0.648,
+    "winRate": 33.3333,
+    "averageR": 0.216,
+    "averageWinR": 2.648,
+    "averageLossR": 1,
+    "profitFactor": 1.324,
+    "maximumLosingStreak": 2,
+    "processScoreAverage0to10": 6.1667
+  },
+  "learning": {
+    "processScores": [
+      {
+        "exerciseNumber": 1,
+        "score0to10": 5.8
+      },
+      {
+        "exerciseNumber": 2,
+        "score0to10": 6.0
+      },
+      {
+        "exerciseNumber": 3,
+        "score0to10": 6.7
+      }
+    ],
+    "recurringErrors": [
+      "missing_explicit_invalidation",
+      "missing_time_exit_and_management_plan",
+      "tp_rr_not_1_2_3",
+      "countertrend_not_reconciled_across_timeframes",
+      "chosen_stop_model_not_explicitly_declared_before_freeze",
+      "target_liquidity_not_explicitly_mapped"
+    ],
+    "strongestConcepts": [
+      "fvg_orderblock_entry_confluence",
+      "bsl_ssl_mapping",
+      "liquidity_oriented_full_target",
+      "session_liquidity_sweep_reasoning",
+      "five_minute_sweep_mss_fvg_retest_direction"
+    ],
+    "trainingPriorities": [
+      "complete_execution_contract_before_freeze",
+      "separate_external_bias_from_execution_orderflow",
+      "define_session_high_low_and_time_exit",
+      "freeze_counter_signals_target_liquidity_and_post_tp1_management",
+      "declare_local_5m_or_external_htf_stop_model_and_size_targets_accordingly",
+      "enforce_london_and_news_exit_before_replay"
+    ]
+  }
+}

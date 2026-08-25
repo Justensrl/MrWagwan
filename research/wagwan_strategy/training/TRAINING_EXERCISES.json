@@ -1,0 +1,861 @@
+{
+  "schemaVersion": "3.0",
+  "seriesId": "wagwan-replay-v3-reset-2026-08-18",
+  "status": "ARCHIVED – NOT ACTIVE",
+  "archivedAt": "2026-08-25T17:30:00+02:00",
+  "archiveReason": "Strategy replaced by MRWAGWAN ORDERFLOW STRATEGY. Historical records only.",
+  "timezone": "Europe/Berlin",
+  "legacyDataExcluded": true,
+  "exercises": [
+    {
+      "exerciseNumber": 1,
+      "status": "completed",
+      "createdAt": "2026-08-18T16:09:50.1895203+02:00",
+      "completedAt": "2026-08-18T17:17:38.1857474+02:00",
+      "market": "GBPUSD",
+      "feed": "OANDA:GBPUSD",
+      "analysisTimezone": "Europe/Berlin",
+      "historical": {
+        "freezeUnix": 1784728799,
+        "freezeTimeUtc": "2026-07-22T13:59:59Z",
+        "freezeTimeBerlin": "2026-07-22T15:59:59+02:00",
+        "session": "New York",
+        "replayActive": true,
+        "autoplay": false,
+        "futureBarsHidden": true,
+        "selectionReason": "Liquider GBPUSD-Abschnitt für eine vollständige Top-down-SMC-Eigenanalyse. Die Auswahl legt weder Richtung noch Ergebnis nahe."
+      },
+      "timeframes": {
+        "requiredOrder": ["4H", "1H", "15m", "5m"],
+        "reason": "4H für HTF-Bias und externe Liquidität, 1H für Struktur und POIs, 15m für die Setup-Struktur und 5m für eine optionale Entry-Bestätigung beziehungsweise Verfeinerung."
+      },
+      "task": {
+        "mode": "independent_full_analysis",
+        "steps": [
+          {
+            "step": 1,
+            "name": "Higher-Timeframe-Bias",
+            "required": ["bullisch_baerisch_neutral", "Begründung"]
+          },
+          {
+            "step": 2,
+            "name": "Marktstruktur",
+            "required": ["Swing_Highs", "Swing_Lows", "BOS", "CHoCH", "MSS", "Displacement"]
+          },
+          {
+            "step": 3,
+            "name": "Liquidität",
+            "required": ["BSL", "SSL", "Equal_Highs", "Equal_Lows", "interne_Liquiditaet", "externe_Liquiditaet", "Session_High_Low", "Liquidity_Pools", "Sweeps_Grabs"]
+          },
+          {
+            "step": 4,
+            "name": "SMC-Zonen",
+            "required": ["FVG", "Order_Blocks", "Breaker_Blocks_falls_vorhanden", "Mitigation_Blocks_falls_vorhanden", "Supply", "Demand", "Premium", "Discount", "Equilibrium"]
+          },
+          {
+            "step": 5,
+            "name": "Sessions",
+            "required": ["Asia", "London", "New_York", "relevante_Session_Liquiditaet"]
+          },
+          {
+            "step": 6,
+            "name": "Setup",
+            "required": ["Long_Short_No_Trade", "Begründung"]
+          },
+          {
+            "step": 7,
+            "name": "Trade-Plan",
+            "required": ["Entry", "Stop_Loss", "Invalidierung", "TP1", "TP2", "TP3_Full_TP", "Risk_to_Reward", "Target_Liquiditaet", "Entry_Begründung"]
+          }
+        ],
+        "helpCommands": ["Kleiner Hinweis", "Mehr Hilfe", "Zeig mir die Lösung für diesen Punkt"],
+        "freezeCommand": "Fertig"
+      },
+      "artifacts": {
+        "taskTextObjectId": "W8eKd4",
+        "hiddenLegacyTextObjectIds": ["VR5r68"],
+        "taskScreenshot": "screenshots/training_v3_001_gbpusd_task.png",
+        "taskScreenshotSha256": "5F64B053986B1A78BC4B996CBE452BD93F3FE5E0ED104757358811ACD8CB86CB",
+        "solutionDrawingsCreated": false
+      },
+      "templateCheck": {
+        "tool": "text",
+        "namedTemplatesFound": [],
+        "currentSavedDefaultsUsed": true,
+        "templatesSavedOrModified": false
+      },
+      "helpEvents": [
+        {
+          "timestamp": "2026-08-18T16:41:41.5627823+02:00",
+          "level": 1,
+          "request": "Kleiner Hinweis",
+          "chartTimeframeAtInspection": "15m",
+          "observedStudentDrawings": {
+            "countExcludingTaskText": 11,
+            "labels": [
+              "bullish trend",
+              "ChoCh",
+              "BoS",
+              "BSL (HTF)",
+              "SSL (HTF)",
+              "Premium/Discount-Fibonacci",
+              "Orderblock",
+              "FVG",
+              "BSL (intern)",
+              "SSL (intern)",
+              "ms"
+            ]
+          },
+          "hintFocus": "Vor der Richtungs- und Entry-Entscheidung die für den Cut-off relevante Session-Spanne mit Session High/Low markieren und prüfen, welche Seite bereits abgeholt wurde beziehungsweise noch als Ziel offen ist.",
+          "correctnessRevealed": false,
+          "futureOutcomeRevealed": false,
+          "replayAdvanced": false,
+          "drawingsChangedByCoach": false,
+          "screenshot": {
+            "path": "screenshots/training_v3_001_gbpusd_intermediate_01.png",
+            "sha256": "F0345DD2CDC0A2678444F6294BD25FF0560A9F6BF979BF52B17816642BF41A6A"
+          }
+        }
+      ],
+      "studentAnalysis": {
+        "bias": "bullish",
+        "decision": "long",
+        "identifiedStructuresFromDrawingLabels": [
+          "bullish trend",
+          "CHoCH",
+          "BOS",
+          "BSL",
+          "SSL",
+          "Premium/Discount/Equilibrium",
+          "Liquidity",
+          "liquidity sweep",
+          "market shift",
+          "Order Block",
+          "FVG"
+        ],
+        "writtenExplanation": null
+      },
+      "frozenPlan": {
+        "frozenAt": "2026-08-18T15:09:25.191Z",
+        "replayCurrentDate": 1784728799,
+        "decision": "long",
+        "entry": 1.33722,
+        "stopLoss": 1.33347,
+        "invalidation": null,
+        "tp1": 1.3395076609906302,
+        "tp2": 1.3434465950988126,
+        "tp3FullTp": 1.34562,
+        "plannedRR": 2.24,
+        "explicitWrittenReason": null,
+        "missingRequiredFields": [
+          "explicit_invalidation_label",
+          "explicit_written_trade_reason"
+        ],
+        "postFreezeChangesAllowed": false,
+        "freezeManifest": "training_v3_001_freeze_manifest.json",
+        "freezeManifestSha256": "BEB29F1859137AC5BE26910CDFC72DA15B3A6A33B92BB4763465C3D660BEACFF",
+        "freezeScreenshot": "screenshots/training_v3_001_gbpusd_freeze.png",
+        "freezeScreenshotSha256": "F7F8D4EF9A9C174D8678D12BE1E2EEACBF87979C5119D3AC8F2E49A3AA25F2D6"
+      },
+      "resolution": {
+        "entryFilled": true,
+        "entryFillTimeBerlin": "2026-07-22T16:45:00+02:00",
+        "entryFillPrice": 1.33722,
+        "exitTimeBerlin": "2026-07-23T15:00:00+02:00",
+        "exitPrice": 1.33347,
+        "exitReason": "STOP_LOSS",
+        "outcome": "loss",
+        "actualR": -1,
+        "tp1Reached": false,
+        "tp2Reached": false,
+        "tp3Reached": false,
+        "maximumFavorableExcursionR": 0.5653333333332852,
+        "tp1MissedByPips": 1.676609906302584,
+        "holdingDurationMinimum": "22h00m",
+        "holdingDurationMaximum": "22h30m",
+        "resultFile": "training_v3_001_resolution.json",
+        "resultFileSha256": "FF62B6824DA0ECD507177D6BD6DD06186AE92C2FB68613725FB6D8A802CF6658",
+        "resultScreenshot": "screenshots/training_v3_001_gbpusd_result.png",
+        "resultScreenshotSha256": "1D12C950AF4465E46A1B20DE3D233877490D36043B6A808482CB4BE63C620F31",
+        "futureBarsAfterTerminalVisible": false
+      },
+      "review": {
+        "processScore0to10": 5.8,
+        "scoreBreakdown": {
+          "higherTimeframeAnalysis0to2": 1.2,
+          "marketStructure0to2": 1.3,
+          "liquidity0to1": 0.7,
+          "entry0to1_5": 1.1,
+          "stop0to1": 0.5,
+          "targets0to1": 0.5,
+          "disciplineAndRuleCompliance0to1_5": 0.5
+        },
+        "A_higherTimeframeAnalysis": {
+          "assessment": "Der große bullische Leg wurde erkannt. Der Freeze trennte jedoch den extern bullischen H4-Kontext nicht sauber von der kurzfristig schwächeren beziehungsweise korrektiven H1-/M15-Struktur.",
+          "correct": [
+            "Große Aufwärtsstrecke und übergeordnete BSL/SSL wurden markiert.",
+            "Ein lokaler Dealing Range mit Premium, Discount und Equilibrium wurde verwendet."
+          ],
+          "imprecise": [
+            "Die alleinige Bezeichnung 'bullish trend' dokumentierte den Timeframe und den Status der laufenden Korrektur nicht ausreichend."
+          ]
+        },
+        "B_marketStructure": {
+          "assessment": "CHoCH, BOS und ein interner Market Shift waren vorhanden und bildeten eine nachvollziehbare Reversal-These. Timeframe, gebrochenes Swing-Level und Close-Bestätigung wurden jedoch nicht explizit dokumentiert.",
+          "correct": [
+            "Strukturwechsel und BOS wurden getrennt markiert.",
+            "Der interne Shift lag in der Nähe des geplanten Ausführungsbereichs."
+          ],
+          "missedOrImprecise": [
+            "Kein eindeutiger Protected Low beziehungsweise strukturelles Invalidations-Swing wurde beschriftet.",
+            "MSS war nur als 'ms' bezeichnet und keinem Timeframe zugeordnet."
+          ]
+        },
+        "C_liquidity": {
+          "assessment": "Externe und interne BSL/SSL sowie ein Sweep wurden sichtbar gemacht. Die Session-Liquidität blieb trotz Sessions-Indikator unbeschriftet.",
+          "correct": [
+            "BSL und SSL wurden als unterschiedliche Ziele behandelt.",
+            "Der Liquidity Sweep vor dem Long-POI wurde erkannt."
+          ],
+          "missed": [
+            "Asia-, London- und New-York-High/Low wurden nicht explizit markiert oder in die Begründung aufgenommen."
+          ]
+        },
+        "D_smcZones": {
+          "assessment": "FVG und Order Block überlappten den Entry-Bereich und ergaben eine plausible Confluence. Supply/Demand, Mitigation-Status und die genaue Ursprungskerze des Order Blocks wurden nicht dokumentiert.",
+          "correct": [
+            "Bullisches FVG und Order Block wurden getrennt gezeichnet.",
+            "Der Entry lag innerhalb ihres Überlappungsbereichs."
+          ],
+          "missedOrImprecise": [
+            "Keine klare Aussage, ob der Order Block frisch, teilweise mitigiert oder invalidiert war."
+          ]
+        },
+        "E_tradeDirection": {
+          "assessment": "Der Long war als Reversal aus Discount nach Sweep, internem Shift und POI nachvollziehbar. Er war aber aggressiv, weil die widersprüchliche kurzfristige Schwäche und die Session-Struktur nicht abschließend aufgelöst wurden.",
+          "outcomeIndependentVerdict": "logisch_aber_nicht_vollstaendig_validiert"
+        },
+        "F_entry": {
+          "assessment": "Entry 1,33722 lag im FVG-/Order-Block-Überlappungsbereich und wurde als Limit sauber gefüllt. Eine schriftliche Bestätigungs- und Retest-Regel fehlte.",
+          "maximumFavorableExcursionR": 0.5653333333332852
+        },
+        "G_stopLoss": {
+          "assessment": "Der SL lag unter der markierten externen SSL, jedoch nur etwa 0,3 Pip darunter. Das ist als Puffer knapp; außerdem war kein separates Invalidationslevel eingefroren.",
+          "classification": "strukturell_nachvollziehbar_aber_zu_knapper_puffer_und_undokumentierte_invalidation"
+        },
+        "H_takeProfits": {
+          "tp1": "1,33951 lag an Equilibrium/Liquidität, entsprach aber nur ungefähr 0,61R statt 1R und wurde um rund 1,68 Pips verfehlt.",
+          "tp2": "1,34345 war strukturell nachvollziehbar, entsprach ungefähr 1,66R statt 2R.",
+          "tp3": "1,34562 lag an der oberen BSL und war als Full TP technisch sinnvoll, entsprach aber ungefähr 2,24R statt 3R.",
+          "managementLimitation": "Teilgewichte und die Reaktion nach TP1 beziehungsweise TP2 waren nicht definiert."
+        },
+        "I_tradeManagement": {
+          "assessment": "Es gab weder Zeit-Exit noch Break-even-/Teilgewinnregel. Der Trade blieb dadurch ungefähr 22 bis 22,5 Stunden über New-York-Schluss, Asia und London hinweg aktiv und endete am SL.",
+          "ruleCompliance": "unvollstaendig"
+        },
+        "good": [
+          "Entry-Confluence aus Liquidity Sweep, internem Shift, FVG und Order Block war klar erkennbar.",
+          "BSL und SSL wurden auf mehreren Ebenen getrennt markiert.",
+          "TP3/Full TP war an einer realen oberen Liquiditätszone ausgerichtet."
+        ],
+        "bad": [
+          "Kein explizites Invalidationslevel, kein Zeit-Exit und keine Managementregeln wurden eingefroren.",
+          "Externer HTF-Bias und kurzfristige Ausführungsstruktur wurden nicht sauber getrennt validiert.",
+          "TP1, TP2 und TP3 entsprachen nicht dem vereinbarten 1R-/2R-/3R-Raster und hatten keine Teilgewichte."
+        ],
+        "largestError": "Der Trade hatte keinen vorab definierten Session-/Zeit-Exit oder Managementplan und blieb deshalb ohne objektive Zwischenentscheidung über mehrere Sessions aktiv.",
+        "keyLearningPoint": "Vor 'Fertig' immer einen vollständigen Execution Contract festlegen: strukturelle Invalidierung, Session-/Zeit-Exit und exakte Managementregel müssen genauso eindeutig sein wie Entry und SL."
+      },
+      "safety": {
+        "futureBarsRevealed": false,
+        "orders": false,
+        "alerts": false,
+        "pinePublished": false,
+        "userDrawingsDeleted": false,
+        "layoutChanged": false
+      }
+    },
+    {
+      "exerciseNumber": 2,
+      "status": "completed",
+      "createdAt": "2026-08-18T21:55:43.2288545+02:00",
+      "completedAt": "2026-08-18T22:31:19.0403459+02:00",
+      "market": "NAS100USD",
+      "feed": "OANDA:NAS100USD",
+      "analysisTimezone": "Europe/Berlin",
+      "historical": {
+        "freezeUnix": 1782307799,
+        "freezeTimeUtc": "2026-06-24T13:29:59Z",
+        "freezeTimeBerlin": "2026-06-24T15:29:59+02:00",
+        "session": "London close / unmittelbar vor New York",
+        "replayActive": true,
+        "autoplay": false,
+        "futureBarsHidden": true,
+        "selectionReason": "Liquider NAS100-Abschnitt unmittelbar vor der New-York-Session für eine vollständige Top-down-SMC-Eigenanalyse. Die Auswahl legt weder Richtung noch Ergebnis nahe."
+      },
+      "timeframes": {
+        "requiredOrder": ["4H", "1H", "15m", "5m"],
+        "reason": "4H für HTF-Bias und externe Liquidität, 1H für Struktur und POIs, 15m für London-/Pre-New-York-Setup-Struktur und 5m für die Entry-Verfeinerung."
+      },
+      "task": {
+        "mode": "independent_full_analysis_forced_direction",
+        "allowedDecisions": ["long", "short"],
+        "noTradeAllowed": false,
+        "steps": [
+          "HTF-Bias mit Begründung",
+          "Swing Highs/Lows, BOS, CHoCH, MSS und Displacement",
+          "BSL/SSL, Equal Highs/Lows, interne/externe Liquidität, Session High/Low, Pools und Sweeps",
+          "FVG, Order Blocks, vorhandene Breaker-/Mitigation-Blocks, Supply/Demand und Premium/Discount/Equilibrium",
+          "Asia-, London- und New-York-Kontext",
+          "zwingend LONG oder SHORT mit Pro- und Contra-Faktoren",
+          "Entry, Stop-Loss, Invalidierung, TP1, TP2, TP3/Full TP, RR, Ziel-Liquidität und bestätigende Marktstruktur",
+          "Session-/Zeit-Exit und Managementregel"
+        ],
+        "helpCommands": ["Kleiner Hinweis", "Mehr Hilfe", "Zeig mir die Lösung für diesen Punkt"],
+        "freezeCommand": "Fertig"
+      },
+      "artifacts": {
+        "taskTextObjectId": "eL8a3V",
+        "taskScreenshot": "screenshots/training_v3_002_task.png",
+        "taskScreenshotSha256": "D8EDD78BDC5D2469A8E412621641BBED73736391BEA2A24875FB59A4F720380D",
+        "solutionDrawingsCreated": false,
+        "freezeScreenshot": "screenshots/training_v3_002_nas100usd_freeze.png",
+        "freezeScreenshotSha256": "B367BAB9CE7E44D243047AF164A55CD0039095EF85D037A91F548C0FC7215C58",
+        "resultScreenshot": "screenshots/training_v3_002_nas100usd_result.png",
+        "resultScreenshotSha256": "1C977CF72278CE3E5EE27B6E7156745157A272A6BA9012FF880A95DE62E48136"
+      },
+      "templateCheck": {
+        "tool": "text",
+        "namedTemplatesFound": [],
+        "currentSavedDefaultsUsed": true,
+        "templatesSavedOrModified": false
+      },
+      "indicators": {
+        "present": ["Sessions [LuxAlgo]"],
+        "addedForExercise": [],
+        "note": "Vorhandener Session-Indikator wurde erhalten; er lieferte dem Coach keine Richtungsentscheidung."
+      },
+      "studentAnalysis": {
+        "decision": "long",
+        "higherTimeframeBias": "downtrend_marked_but_not_explicitly_reconciled_with_long_execution",
+        "identifiedStructuresFromDrawingLabels": [
+          "downtrend",
+          "BSL",
+          "SSL",
+          "session highs",
+          "session lows",
+          "consolidation phase",
+          "BOS",
+          "CHoCH",
+          "market shift",
+          "bullish order block",
+          "order block",
+          "FVG",
+          "broken FVG",
+          "premium/discount/equilibrium"
+        ],
+        "writtenExplanation": "Der Markt hat unten die Session Lows ausgenommen, um Liquiditaet zu sammeln. Danach ging er in einen starken Uptrend und anschliessend in eine Konsolidierungsphase ueber. Es folgte ein Pullback in den Orderblock, der durch den starken Uptrend entstanden war. Nach einem weiteren Retracement zum Orderblock wurde der Long-Entry genommen."
+      },
+      "helpEvents": [],
+      "intermediateChecks": [
+        {
+          "timestamp": "2026-08-18T22:19:15.7991757+02:00",
+          "timeframeShown": "15m",
+          "screenshot": "screenshots/training_v3_002_intermediate_01.png",
+          "screenshotSha256": "7FBFE116A90869C0F26057652AA35893B9978991E77320B22E625E4F802AEEDB",
+          "observedPlanDirection": "long",
+          "observedEntry": 29472.0,
+          "observedStopLoss": 29349.2,
+          "observedTp1": 29638.39,
+          "observedTp2": 29766.59,
+          "observedTp3FullTp": 29896.2,
+          "observedStructures": [
+            "BSL",
+            "SSL",
+            "session highs",
+            "session lows",
+            "downtrend information line",
+            "consolidation phase",
+            "bullish order block",
+            "order block",
+            "FVG",
+            "broken FVG",
+            "BOS",
+            "premium/discount retracement"
+          ],
+          "completionOnlyAssessment": true,
+          "correctnessRevealed": false,
+          "futureBarsRevealed": false,
+          "replayAdvanced": false,
+          "missingOrNotExplicitBeforeFreeze": [
+            "separate invalidation statement or level",
+            "target-liquidity mapping for each TP",
+            "explicit confirming-structure rationale",
+            "counter-signals against the long decision",
+            "session/time exit",
+            "management rule",
+            "final RR verification"
+          ]
+        }
+      ],
+      "frozenPlan": {
+        "frozenAt": "2026-08-18T20:29:43.270Z",
+        "replayCurrentDate": 1782307799,
+        "decision": "long",
+        "entry": 29472.0,
+        "entryStatusAtFreeze": "filled_before_cutoff",
+        "entryTimeBerlin": "2026-06-24T15:20:00+02:00",
+        "stopLoss": 29349.2,
+        "invalidation": null,
+        "tp1": 29656.11,
+        "tp2": 29766.59,
+        "tp3FullTp": 29896.2,
+        "plannedRR": 3.4544,
+        "targetLiquidity": null,
+        "confirmingMarketStructure": [
+          "session-low liquidity sweep",
+          "strong bullish displacement/uptrend",
+          "consolidation",
+          "pullback/retracement into bullish order block"
+        ],
+        "counterSignals": [],
+        "timeExit": null,
+        "managementRule": null,
+        "missingRequiredFields": [
+          "explicit_invalidation",
+          "explicit_target_liquidity_mapping",
+          "counter_signals",
+          "time_exit",
+          "management_rule"
+        ],
+        "postFreezeChangesAllowed": false,
+        "freezeManifest": "training_v3_002_freeze_manifest.json",
+        "freezeManifestSha256": "632EC620F146E3C7760D59D9B039740D10C47BB6D57DEC7975977DA340E4F8C5",
+        "freezeScreenshot": "screenshots/training_v3_002_nas100usd_freeze.png",
+        "freezeScreenshotSha256": "B367BAB9CE7E44D243047AF164A55CD0039095EF85D037A91F548C0FC7215C58"
+      },
+      "resolution": {
+        "entryFilled": true,
+        "entryFillTimeBerlin": "2026-06-24T15:20:00+02:00",
+        "entryFillPrice": 29472.0,
+        "exitTimeBerlin": "2026-06-24T19:10:00+02:00",
+        "exitPrice": 29349.2,
+        "firstReplayTickBeyondStop": 29342.2,
+        "slippageModeled": false,
+        "exitReason": "STOP_LOSS",
+        "outcome": "loss",
+        "actualR": -1,
+        "tp1Reached": true,
+        "tp1ReachedTimeBerlin": "2026-06-24T17:00:00+02:00",
+        "tp2Reached": false,
+        "tp3Reached": false,
+        "maximumFavorableExcursionObservedR": 1.5896,
+        "holdingDuration": "3h50m",
+        "partialResultNotComputable": true,
+        "managementLimitation": "No partial-close weights, break-even rule, time exit or management rule were frozen. The recorded result therefore evaluates the full position from entry to SL as -1R despite TP1 being reached.",
+        "resultFile": "training_v3_002_resolution.json",
+        "resultFileSha256": "E326D736110A302B2EB8DA4EB2EF8B451C792562D64AB610F8E31FCFC0430ACF",
+        "resultScreenshot": "screenshots/training_v3_002_nas100usd_result.png",
+        "resultScreenshotSha256": "1C977CF72278CE3E5EE27B6E7156745157A272A6BA9012FF880A95DE62E48136",
+        "futureBarsAfterTerminalVisible": false
+      },
+      "review": {
+        "processScore0to10": 6.0,
+        "scoreBreakdown": {
+          "higherTimeframeAnalysis0to2": 0.9,
+          "marketStructure0to2": 1.3,
+          "liquidity0to1": 0.8,
+          "entry0to1_5": 1.2,
+          "stop0to1": 0.6,
+          "targets0to1": 0.6,
+          "disciplineAndRuleCompliance0to1_5": 0.6
+        },
+        "A_higherTimeframeAnalysis": {
+          "assessment": "Die uebergeordnete Abwaertsstruktur und entfernte BSL/FVG-Bereiche wurden markiert. Der Long wurde jedoch nicht ausdruecklich als interner Gegentrend- beziehungsweise Reversal-Trade gegen den markierten HTF-Downtrend eingeordnet; die Konsistenz von 4H, 1H, 15m und 5m blieb dadurch unvollstaendig.",
+          "correct": [
+            "Der uebergeordnete Downtrend wurde nicht ignoriert, sondern sichtbar markiert.",
+            "Externe obere und untere Referenzbereiche wurden eingezeichnet."
+          ],
+          "missedOrImprecise": [
+            "Keine explizite Trennung zwischen extern bearish und intern bullish.",
+            "Kein schriftlicher Widerspruchscheck der vier Timeframes."
+          ]
+        },
+        "B_marketStructure": {
+          "assessment": "BOS, CHoCH/Market Shift, bullish Displacement und Konsolidierung ergaben eine nachvollziehbare lokale Long-Sequenz. Mehrere Labels waren jedoch keinem Timeframe und keinem eindeutig benannten gebrochenen Swing zugeordnet.",
+          "correct": [
+            "Lokaler Strukturwechsel und BOS lagen nahe der Entry-Zone.",
+            "Displacement, Konsolidierung und Retracement wurden als Abfolge erkannt."
+          ],
+          "missedOrImprecise": [
+            "Protected Low und strukturelle Invalidierung wurden nicht markiert.",
+            "Der interne bullische Leg wurde sprachlich als starker Uptrend bezeichnet, ohne ihn vom HTF-Downtrend abzugrenzen."
+          ]
+        },
+        "C_liquidity": {
+          "assessment": "BSL, SSL sowie Session High und Session Low wurden markiert; die Sweep-These war ein sinnvoller Bestandteil der Long-Idee. Welche konkrete Session-Liquiditaet gesweept wurde und welche Liquiditaet jedem TP zugeordnet war, blieb offen.",
+          "correct": [
+            "Session-Low-Sweep als moeglicher Reversal-Ausloeser erkannt.",
+            "Obere und untere Liquiditaet wurden getrennt markiert."
+          ],
+          "missed": [
+            "Asia/London-Zuordnung der markierten Session-Grenzen fehlte.",
+            "Keine explizite Ziel-Liquiditaetszuordnung fuer TP1, TP2 und TP3."
+          ]
+        },
+        "D_smcZones": {
+          "assessment": "Der lokale bullische Order Block von etwa 29433,83 bis 29472,94 war fuer den Entry relevant und wurde sauber benutzt. Das oberhalb liegende broken FVG war zugleich ein moeglicher Inversion-FVG-Widerstand und haette als Gegensignal behandelt werden muessen. Der weit oberhalb liegende als bullish OB bezeichnete Bereich war im aktuellen Kontext nicht als aktive Demand-Zone begruendet.",
+          "correct": [
+            "Entry am oberen Rand des lokalen bullischen Order Blocks.",
+            "FVG und Order Blocks wurden getrennt eingezeichnet."
+          ],
+          "missedOrImprecise": [
+            "Broken FVG oberhalb des Entries nicht als moeglicher Widerstand gewichtet.",
+            "Status der Zonen als frisch, mitigiert, gebrochen oder als Breaker nicht vollstaendig dokumentiert."
+          ]
+        },
+        "E_tradeDirection": {
+          "assessment": "Der Long war anhand von Session-Low-Sweep, lokaler bullischer Verschiebung und Order-Block-Retest nachvollziehbar. Er war aggressiv, weil er gegen den markierten HTF-Downtrend und kurz vor der New-York-Session erfolgte, ohne dass diese Gegensignale explizit abgewogen wurden.",
+          "outcomeIndependentVerdict": "lokal_logisch_aber_top_down_und_sessionseitig_unvollstaendig_validiert"
+        },
+        "F_entry": {
+          "assessment": "Entry 29472 lag am oberen Rand des lokalen bullischen Order Blocks nach Retracement und lokalem Shift. Das Timing war technisch nachvollziehbar, aber zehn Minuten vor New York besonders volatil; eine eindeutige Close-/Reclaim-Bestaetigungsregel fehlte.",
+          "classification": "gute_poi_lage_aggressives_session_timing"
+        },
+        "G_stopLoss": {
+          "assessment": "Der SL 29349,2 lag unter Order Block, SSL und Session Low und war damit strukturell nachvollziehbar. Weil kein Protected Low als Invalidierung festgelegt und kein Volatilitaetskonzept fuer den New-York-Open dokumentiert wurde, war nicht klar, warum genau dieser Puffer ausreichend sein sollte.",
+          "classification": "plausible_lage_aber_invalidation_und_volatilitaetspuffer_undokumentiert"
+        },
+        "H_takeProfits": {
+          "tp1": "29656,11 lag nahe interner Hoch-Liquiditaet, entsprach rund 1,50R und wurde erreicht.",
+          "tp2": "29766,59 lag unter dem markierten Session High, entsprach rund 2,40R und wurde nicht erreicht.",
+          "tp3": "29896,2 lag oberhalb des Session High und unmittelbar vor dem oberen FVG, entsprach rund 3,45R und war als Full TP strukturell denkbar, wurde aber nicht erreicht.",
+          "rrCompliance": "Die Ziele entsprachen nicht dem vereinbarten exakten 1R-/2R-/3R-Raster; eine bewusste Abweichung zugunsten echter Liquiditaetsziele wurde nicht begruendet."
+        },
+        "I_tradeManagement": {
+          "assessment": "Der Trade erreichte TP1 und mindestens rund +1,59R MFE, fiel danach jedoch bis zum SL. Da keine Teilgewichte, Break-even-Regel, Struktur-Trailing-Regel oder Zeit-Exit eingefroren waren, ist ausschliesslich das volle -1R-Ergebnis auswertbar.",
+          "ruleCompliance": "unvollstaendig"
+        },
+        "good": [
+          "Die Erzaehlung Sweep -> bullish Displacement -> Konsolidierung -> Order-Block-Retest war kohärent.",
+          "Der Entry lag an einem klar markierten lokalen bullischen POI und wurde mit Strukturmarkierungen verbunden.",
+          "TP1 lag an einer erreichbaren internen Hochzone und wurde im Replay tatsaechlich getroffen."
+        ],
+        "bad": [
+          "Der HTF-Downtrend wurde markiert, aber nicht mit der Long-Ausfuehrung und den vier Timeframes versoehnt.",
+          "Invalidierung, Gegensignale, Ziel-Liquiditaetsmapping, Zeit-Exit und Managementregel fehlten beim Freeze.",
+          "Broken FVG und New-York-Volatilitaet wurden nicht ausreichend als Gegenrisiken behandelt; die TP-RRs waren nicht exakt 1/2/3R."
+        ],
+        "largestError": "Es fehlte eine vorab eingefrorene Managementregel fuer den Fall, dass TP1 erreicht wird. Dadurch wurde aus mindestens +1,59R zwischenzeitlicher Bewegung in der einzigen objektiv auswertbaren Vollpositionslogik ein -1R-Verlust.",
+        "keyLearningPoint": "Vor 'Fertig' den Execution Contract schliessen: externen HTF-Bias gegen den internen Entry-Bias abgleichen und Invalidierung, Gegensignale sowie die exakte Regel nach TP1 schriftlich festlegen."
+      },
+      "safety": {
+        "futureBarsRevealed": false,
+        "orders": false,
+        "alerts": false,
+        "pinePublished": false,
+        "userDrawingsDeleted": false,
+        "layoutChanged": false
+      }
+    },
+    {
+      "exerciseNumber": 3,
+      "status": "completed",
+      "createdAt": "2026-08-19T17:46:36.7538282+02:00",
+      "completedAt": "2026-08-19T19:25:00+02:00",
+      "market": "NQ",
+      "feed": "CME_MINI_DL:NQ1!",
+      "analysisTimezone": "Europe/Berlin",
+      "historical": {
+        "freezeUnix": 1785748499,
+        "freezeTimeUtc": "2026-08-03T09:14:59Z",
+        "freezeTimeBerlin": "2026-08-03T11:14:59+02:00",
+        "session": "London",
+        "replayActive": true,
+        "autoplay": false,
+        "futureBarsHidden": true,
+        "exactDecisionPoint": true,
+        "selectionReason": "Outcome-blind erster sequenzieller Kandidat, der 1H-Kontext, Session-Liquiditaet, 5m-MSS/Displacement/FVG-Retest, Premium/Discount, strukturelles Risiko und mindestens 2R Raum erfuellt."
+      },
+      "timeframes": {
+        "allowed": ["1H", "15m", "5m", "1m"],
+        "mostImportant": ["1H", "5m"],
+        "supporting": ["15m", "1m"],
+        "reason": "1H fuer Bias und externe Liquiditaet; 5m fuer den eigentlichen Entscheidungs- und Confirmation-Prozess. 15m liefert Kontext, 1m ist nur bei echtem Mehrwert erlaubt."
+      },
+      "learningObjective": "1H-Kontext mit einem 5m-Session-Sweep, Close-MSS, Displacement, FVG und Retest verbinden und dabei 1m-Noise vermeiden.",
+      "task": {
+        "mode": "teacher_guided_high_quality_forced_direction",
+        "allowedDecisions": ["long", "short"],
+        "noTradeAllowed": false,
+        "initialStep": "Auf 1H externe Struktur, relevante Swing-Grenzen, BSL/SSL, Dealing Range und Bias bestimmen, bevor auf 15m oder 5m gewechselt wird.",
+        "requiredFinalFields": [
+          "direction",
+          "bias",
+          "entry",
+          "stopLoss",
+          "invalidation",
+          "tp1",
+          "tp2",
+          "tp3FullTp",
+          "plannedRR",
+          "targetLiquidity",
+          "confirmingMarketStructure",
+          "counterSignals",
+          "timeExit",
+          "managementRule",
+          "reasoning"
+        ],
+        "helpCommands": ["Kleiner Hinweis", "Mehr Hilfe", "Erklär mir diesen Step"],
+        "freezeCommand": "Fertig"
+      },
+      "preOutcomeQuality": {
+        "grade": "A",
+        "outcomeKnownAtSelection": false,
+        "technicalGatesPassed": true,
+        "historicalNewsGate": "PASS_WITH_KNOWN_LATER_DAY_RISK_AND_REQUIRED_SESSION_EXIT",
+        "knownLaterUsdEventsBerlin": [
+          "15:45 US Final Manufacturing PMI",
+          "16:00 US ISM Manufacturing PMI / Prices / Construction Spending"
+        ],
+        "note": "Die spaeteren USD-Termine waren am Entscheidungspunkt bekannt. Die Uebung lockert den konservativen Wagwan-Ganztagesfilter nicht; Session-/Zeit-Exit muss vor dem Freeze definiert werden.",
+        "auditFile": "training_v3_003_preoutcome_quality.json",
+        "auditFileSha256": "A79A399A465E57C9B94AD7FC7C4EEFBCD02020879051921054455BAC845E8829"
+      },
+      "artifacts": {
+        "taskTextObjectId": "tQ81lP",
+        "taskScreenshot": "screenshots/training_v3_003_nq_task.png",
+        "taskScreenshotSha256": "13562ACE0D21E613AF3B14056D63E609305E469ACE253E7E9CB366148AF6A5A2",
+        "solutionDrawingsCreated": false
+      },
+      "templateCheck": {
+        "tool": "text",
+        "namedTemplatesFound": [],
+        "currentSavedDefaultsUsed": true,
+        "templatesSavedOrModified": false
+      },
+      "indicators": {
+        "present": ["Sessions [LuxAlgo]"],
+        "addedForExercise": [],
+        "note": "Vorhandener Session-Indikator wurde erhalten; keine Richtung oder Loesung wurde daraus eingezeichnet."
+      },
+      "studentAnalysis": {
+        "decision": "long",
+        "entry": 28547.75,
+        "stopLoss": 28249.0,
+        "tp1": 28753.0173,
+        "tp2": 29102.9949,
+        "tp3FullTp": 29338.8493,
+        "plannedRR": 2.6418,
+        "markedStructures": [
+          "uptrend",
+          "CHoCH",
+          "BOS",
+          "liquidity sweeps",
+          "weekend opening gap"
+        ],
+        "writtenReasoning": null,
+        "missingAtFreeze": [
+          "explicit invalidation",
+          "target-liquidity mapping",
+          "counter-signals",
+          "time/news exit",
+          "management rule",
+          "written trade reasoning"
+        ]
+      },
+      "helpEvents": [
+        {
+          "timestamp": "2026-08-19T18:03:12.4305539+02:00",
+          "level": 1,
+          "request": "Kleiner Hinweis",
+          "chartTimeframeAtInspection": "15m",
+          "observedStudentDrawings": {
+            "countExcludingTaskText": 6,
+            "labels": ["CHoCH", "BOS", "uptrend", "three unlabeled horizontal rays"]
+          },
+          "hintFocus": "Zurueck auf 1H wechseln und die aktive externe Dealing Range vom aktuellen Preis rueckwaerts aus dem letzten bestaetigten Impuls bestimmen, statt automatisch die aeltesten oder am weitesten entfernten sichtbaren Hochs/Tiefs zu verwenden.",
+          "correctnessRevealed": false,
+          "futureOutcomeRevealed": false,
+          "replayAdvanced": false,
+          "drawingsChangedByCoach": false,
+          "screenshot": {
+            "path": "screenshots/training_v3_003_nq_intermediate_01.png",
+            "sha256": "6255DD849EB4089E9FECE831B4D1C978AA90B31D9A5AC3191AF7E9DCC39D33D0"
+          }
+        },
+        {
+          "timestamp": "2026-08-19T18:21:10.6055857+02:00",
+          "level": 3,
+          "request": "Erklaerung der Luecke zwischen einer bearishen und der folgenden bullishen Kerze",
+          "source": "user_provided_screenshot",
+          "teachingFocus": "Zwei-Kerzen-Opening-/Session-Gap beziehungsweise moegliches NWOG von einer standardisierten Drei-Kerzen-FVG unterscheiden; Wick- statt Body-Grenzen pruefen und beide Konzepte getrennt behandeln.",
+          "futureOutcomeRevealed": false,
+          "replayAdvanced": false,
+          "drawingsChangedByCoach": false
+        }
+      ],
+      "intermediateChecks": [],
+      "frozenPlan": {
+        "frozenAt": "2026-08-19T17:02:59.580Z",
+        "replayCurrentDate": 1785748499,
+        "decision": "long",
+        "entry": 28547.75,
+        "entryTimeBerlin": "2026-08-03T11:10:00+02:00",
+        "stopLoss": 28249.0,
+        "invalidation": null,
+        "tp1": 28753.0173,
+        "tp2": 29102.9949,
+        "tp3FullTp": 29338.8493,
+        "plannedRR": 2.6418,
+        "targetRR": {
+          "tp1": 0.6871,
+          "tp2": 1.8586,
+          "tp3": 2.648
+        },
+        "postFreezeChangesAllowed": false,
+        "freezeManifest": "training_v3_003_freeze_manifest.json",
+        "freezeManifestSha256": "F9E993AC6CD9D88D99843E4B474C9F914A5F56137C96E42A9E5FE011B70C0E0D",
+        "freezeScreenshot": "screenshots/training_v3_003_nq_freeze_15m.png",
+        "freezeScreenshotSha256": "8DF9274F406BF4665B6855BF5713E8E8A2665CA681F45E0B89B45D6D99E22EC2"
+      },
+      "resolution": {
+        "entryFilled": true,
+        "entryFillTimeBerlin": "2026-08-03T11:10:00+02:00",
+        "exitTimeBerlin": "2026-08-04T15:30:00+02:00",
+        "exitReason": "TP3_FULL_TP",
+        "outcome": "win",
+        "actualR": 2.648,
+        "tp1Reached": true,
+        "tp1ReachedTimeBerlin": "2026-08-03T16:50:00+02:00",
+        "tp2Reached": true,
+        "tp2ReachedTimeBerlin": "2026-08-04T09:25:00+02:00",
+        "tp3Reached": true,
+        "tp3ReachedTimeBerlin": "2026-08-04T15:30:00+02:00",
+        "maximumFavorableExcursionObservedR": 2.8,
+        "maximumAdverseExcursionObservedR": 0.7841,
+        "holdingDuration": "28h20m",
+        "resultFile": "training_v3_003_resolution.json",
+        "resultFileSha256": "1C3F0FDC45120B2ABE3EAB3F109E97F704C3A01B1926EB0B7E39947CD73029FE",
+        "exact5mPathAudit": "training_v3_003_exact_5m_path_audit.json",
+        "exact5mPathAuditSha256": "27D6C553780D5286454719155C5B63480142AEDF20CD4F0D6C60483D1F8004BB",
+        "resultScreenshot": "screenshots/training_v3_003_nq_result_5m.png",
+        "resultScreenshotSha256": "632AFB67DF568E070E3A924C14949AEF7EC274559478E75EB511FC38A1C3D1E9",
+        "replayResolution": "5m",
+        "futureBarsAfterTerminalVisible": false
+      },
+      "review": {
+        "processScore0to10": 6.7,
+        "outcomeIndependentVerdict": "direction_correct_and_setup_high_quality_but_execution_contract_incomplete",
+        "bestDecision": "LONG direction and 5m FVG/retest entry area matched the sealed outcome-blind A-quality coach audit.",
+        "largestError": "HTF protected-low invalidation was not explicitly declared before freeze; session/news exit and management rule were also missing.",
+        "postReviewClarification": "Student states after outcome that SL 28249 was intentionally placed below the protected low before the Weekend Opening Gap. Coach accepts the technical HTF stop logic; freeze fields remain unchanged.",
+        "reviewFile": "training_v3_003_review.json",
+        "reviewFileSha256": "51535882F743B56993DD70ECCB49E90012CB9EB23169A62137DB51397B21BC1F",
+        "timeframeAuditFile": "training_v3_003_timeframe_audit.json",
+        "timeframeAuditFileSha256": "C68DBF4C8F8AD26717F86DD241F08615569BB7988642D57C790A8D600E56513E"
+      },
+      "safety": {
+        "futureBarsRevealedBeforeFreeze": false,
+        "futureBarsRevealedAfterFreeze": true,
+        "orders": false,
+        "alerts": false,
+        "pinePublished": false,
+        "userDrawingsDeleted": false,
+        "layoutChanged": false,
+        "cdpAddress": "127.0.0.1:9222"
+      }
+    },
+    {
+      "exerciseNumber": 4,
+      "status": "archived_incomplete_strategy_replaced_by_orderflow",
+      "archivedAt": "2026-08-25T17:30:00+02:00",
+      "createdAt": "2026-08-19T20:45:00+02:00",
+      "completedAt": null,
+      "market": "XAUUSD",
+      "feed": "OANDA:XAUUSD",
+      "analysisTimezone": "Europe/Berlin",
+      "historical": {
+        "freezeUnix": 1785751499,
+        "freezeTimeUtc": "2026-08-03T10:04:59Z",
+        "freezeTimeBerlin": "2026-08-03T12:04:59+02:00",
+        "session": "London",
+        "replayActive": true,
+        "replayResolution": "5m",
+        "autoplay": false,
+        "futureBarsHidden": true,
+        "exactDecisionPoint": true,
+        "selectionReason": "Outcome-blind A-grade reversal-context candidate with 1H discount context, Asia SSL sweep, 5m close-MSS/displacement/FVG retest and more than 2R room to opposite Asia liquidity."
+      },
+      "timeframes": {
+        "allowed": ["1H", "15m", "5m", "1m"],
+        "mostImportant": ["1H", "5m"],
+        "supporting": ["15m", "1m"],
+        "reason": "1H separates external context from reversal location; 5m supplies the decision model. 15m is internal context and 1m is optional only when it adds information. Replay starts and resolves on 5m."
+      },
+      "learningObjective": "Separate external HTF context from internal session orderflow and explicitly choose between a local execution stop and a broader HTF protected-low/high invalidation model.",
+      "task": {
+        "mode": "teacher_guided_high_quality_forced_direction",
+        "allowedDecisions": ["long", "short"],
+        "noTradeAllowed": false,
+        "initialStep": "Although replay is initialized on 5m, begin analysis on 1H: mark active external range, confirmed swings, BSL/SSL, equilibrium and whether current price is in premium or discount.",
+        "requiredFinalFields": [
+          "direction", "bias", "entry", "stopLoss", "invalidation", "stopModelTimeframe",
+          "tp1", "tp2", "tp3FullTp", "plannedRR", "targetLiquidity", "confirmingMarketStructure",
+          "counterSignals", "timeExit", "managementRule", "reasoning"
+        ],
+        "helpCommands": ["Kleiner Hinweis", "Mehr Hilfe", "Erklär mir diesen Step"],
+        "freezeCommand": "Fertig"
+      },
+      "preOutcomeQuality": {
+        "grade": "A",
+        "outcomeKnownAtSelection": false,
+        "technicalGatesPassed": true,
+        "contextType": "HTF_REVERSAL_CONTEXT_NOT_SIMPLE_TREND_ALIGNMENT",
+        "historicalNewsGate": "PASS_WITH_KNOWN_LATER_HIGH_IMPACT_USD_RISK_AND_REQUIRED_EXIT",
+        "knownLaterHighImpactUsdEventsBerlin": [
+          "16:00 US ISM Manufacturing PMI / Prices"
+        ],
+        "ignoredNonHighImpactEvents": [
+          "15:45 S&P Global U.S. Final Manufacturing PMI"
+        ],
+        "auditFile": "training_v3_004_preoutcome_quality.json",
+        "auditFileSha256": "48171B367C7B1801610B8DFA12586F8FE01DDC5BAEE1ED27C22F474F402F0895"
+      },
+      "artifacts": {
+        "taskTextObjectId": "gKWBxf",
+        "taskScreenshot": "screenshots/training_v3_004_xauusd_task.png",
+        "taskScreenshotSha256": "BDFDB8BD3C90233F0631674E907F8F6BAF4C7AB8B777D655D624C7C0D28C6E2F",
+        "solutionDrawingsCreated": false
+      },
+      "templateCheck": {
+        "tool": "text",
+        "namedTemplatesFound": [],
+        "currentSavedDefaultsUsed": true,
+        "templatesSavedOrModified": false
+      },
+      "indicators": {
+        "present": ["Sessions [LuxAlgo]"],
+        "addedForExercise": [],
+        "note": "Existing session indicator retained; no directional solution added."
+      },
+      "studentAnalysis": null,
+      "helpEvents": [],
+      "intermediateChecks": [],
+      "frozenPlan": null,
+      "resolution": null,
+      "review": null,
+      "postTradeValidationPolicy": "WAGWAN_POST_TRADE_VALIDATION_CHECKLIST.md",
+      "postTradeValidationPolicySha256": "47794002D447764D6BE6713F76BD296156B26BFBB6904373E225AD2B7CCCD8FB",
+      "safety": {
+        "futureBarsRevealed": false,
+        "orders": false,
+        "alerts": false,
+        "pinePublished": false,
+        "userDrawingsDeleted": false,
+        "layoutChanged": false,
+        "cdpAddress": "127.0.0.1:9222"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "seriesId": "mrwagwan-orderflow-v1",
+  "strategyStatus": "ORDERFLOW ONLY",
+  "createdAt": "2026-08-25T17:30:00+02:00",
+  "timezone": "Europe/Berlin",
+  "nextExerciseId": "OF_TRAINING_001",
+  "activeExerciseId": null,
+  "currentLevel": 0,
+  "forcedDirection": false,
+  "allowedDecisions": ["long", "short", "no_trade"],
+  "dataGatePassed": false,
+  "statistics": {
+    "exercises": 0,
+    "plannedTrades": 0,
+    "noTradeDecisions": 0,
+    "wins": 0,
+    "losses": 0,
+    "breakEven": 0,
+    "totalR": 0,
+    "winRate": null,
+    "averageR": null,
+    "profitFactor": null,
+    "maximumDrawdownR": null
+  },
+  "legacyStatisticsIncluded": false,
+  "safety": {
+    "realTrades": false,
+    "orders": false,
+    "alerts": false,
+    "pinePublished": false
+  }
+}

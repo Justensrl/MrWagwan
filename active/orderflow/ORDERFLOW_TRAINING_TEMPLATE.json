@@ -1,0 +1,71 @@
+{
+  "exerciseId": "OF_TRAINING_001",
+  "status": "draft",
+  "createdAt": null,
+  "completedAt": null,
+  "market": null,
+  "exchange": null,
+  "contract": null,
+  "feed": null,
+  "feedDelay": null,
+  "dataTier": "X",
+  "bidAskClassification": null,
+  "historicalTickData": false,
+  "historicalDepthData": false,
+  "timeframeOrAggregation": null,
+  "historicalDecisionTime": null,
+  "session": null,
+  "highImpactNews": {
+    "status": "unverified",
+    "events": []
+  },
+  "auctionContext": {
+    "state": null,
+    "valueArea": null,
+    "poc": null,
+    "vah": null,
+    "val": null,
+    "valueMigration": null,
+    "acceptanceOrRejection": null
+  },
+  "observedOrderflow": {
+    "aggressiveSide": null,
+    "priceProgress": null,
+    "delta": null,
+    "cvd": null,
+    "imbalances": null,
+    "absorption": null,
+    "exhaustion": null,
+    "dom": null,
+    "tape": null,
+    "followThrough": null
+  },
+  "setupId": null,
+  "decision": null,
+  "entryTrigger": null,
+  "entry": null,
+  "stopLoss": null,
+  "invalidation": null,
+  "targets": [],
+  "plannedRiskToReward": null,
+  "timeExit": null,
+  "counterEvidence": [],
+  "studentAnalysis": null,
+  "frozenBeforeOutcome": false,
+  "result": {
+    "outcome": null,
+    "resultR": null,
+    "holdingTime": null
+  },
+  "coachReview": {
+    "correctAnalysis": null,
+    "errors": [],
+    "learningPoints": [],
+    "processScore0to10": null
+  },
+  "safety": {
+    "realTrade": false,
+    "order": false,
+    "alert": false
+  }
+}
