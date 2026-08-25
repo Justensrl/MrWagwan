@@ -14,7 +14,7 @@
 
 ## Aktueller Lernstand
 
-Research-Framework, Quellenledger, Glossar, Lernplan und zehn Setup-Hypothesen sind angelegt. CORE sind nur Datenintegrität, Auction-Kontext, Trennung von ausgeführtem/ruhendem Flow, Aggression relativ zu Preisfortschritt, Follow-through, No Trade und outcome-blinde Tests. Kein konkretes Setup ist profitabel validiert.
+Research-Framework, Quellenledger, Glossar, Lernplan, zehn Setup-Hypothesen und die praktisch geprüfte Indikatordokumentation sind angelegt. CORE sind Datenintegrität, Auction-Kontext, Trennung von ausgeführtem/ruhendem Flow, Aggression relativ zu Preisfortschritt, Follow-through, No Trade und outcome-blinde Tests. Kein konkretes Setup ist profitabel validiert.
 
 ## Quellenbasis
 
@@ -23,11 +23,16 @@ CME, TradingView und Sierra Chart für technische Definitionen; Cont/Kukanov/Sto
 ## Technische Datenlage
 
 - TradingView Desktop MCP: verbunden über `127.0.0.1:9222`.
-- OHLCV, Symbolmetadaten und Indikatorwerte: verfügbar.
-- aktuelle Ansicht beim Audit: `TVC:USOIL` CFD, 4H; kein kanonischer zentraler Orderflow-Feed.
-- Community-CVD: auslesbar, aber Intrabar-Schätzung und kein verifizierter Roh-Bid/Ask-Feed.
-- DOM: MCP-Werkzeug vorhanden, Panel/Feed aktuell nicht verfügbar.
-- Footprint-Zellen, Time & Sales, historische Ticks/Depth und echte Futures-Echtzeitberechtigung: nicht verifiziert bzw. nicht über MCP verfügbar.
+- aktueller Chart: `CME_MINI_DL:NQ1!`, 5m, natives Session-VWAP + natives CVD.
+- persönliche Indikatorvorlage: `MRWAGWAN_ORDERFLOW_CORE`; Symbol und Intervall nicht mitgespeichert; Layout nicht gespeichert/überschrieben.
+- eingeloggtes TradingView-Abo im Test: `Basic`; frühere Essential-Annahme ist veraltet.
+- VWAP/CVD: auf GC, NQ, ES, 6E, Coinbase BTCUSD und Binance BTC-Perpetual berechnet.
+- Futures: `_DL`, praktisch rund zehn Minuten verzögert; nicht für zeitkritische Live-Orderflow-/Newsentscheidungen.
+- CVD: TradingView-Intrabar-Schätzung, kein verifizierter Roh-Bid/Ask-Feed.
+- Open Interest: NQ Daily praktisch verfügbar; nicht Teil des 5m-Kerns.
+- Volume Profile/TPO: durch Basic→Premium gesperrt.
+- DOM: MCP-Werkzeug vorhanden, Panel/Broker-Tier-2 aktuell nicht verfügbar.
+- Native Footprint-/TPO-Charttypen, Time & Sales, historische Ticks/Depth: nicht über aktuelles MCP verfügbar.
 
 ## Verbindlicher Pre-Trade-Check
 
@@ -39,11 +44,11 @@ Bei Nein: Analyse stoppen. Ausgabe: **„Diese Orderflow-Information ist mit dem
 
 ## Nächster sinnvoller Schritt
 
-Zuerst einen belastbaren zentralen Futures-Datensatz mit Tick-/BidAsk-Daten und optional historischer Depth bereitstellen beziehungsweise praktisch verifizieren. Danach `OF_TRAINING_001` als Daten-/Grundlagenübung starten; noch kein Performance-Backtest.
+Zuerst `OF_TRAINING_001` als Daten-/Grundlagenübung mit dem klar als verzögert/geschätzt gekennzeichneten NQ-Kern starten. Parallel ist der sinnvollste technische Ausbau: CME-Echtzeitdaten und danach Volume Profile freischalten. Footprint/DOM/Tape erst mit verifiziertem Tick-/BidAsk-/Depth-Zugang; noch kein Performance-Backtest.
 
 ## Offene Research-Fragen
 
-- Welcher CME-Echtzeit-/Historienfeed ist im Konto wirklich freigeschaltet?
+- Welcher CME-Echtzeit-/Historienfeed soll rechtmäßig ergänzt werden? Aktuell ist nur `_DL` bestätigt.
 - Lassen sich native TradingView-Footprint-Zellen reproduzierbar exportieren oder per MCP lesen?
 - Welche Plattform liefert rechtmäßig historische Depth und Time & Sales für outcome-blinde Replays?
 - Welche Setup-Schwellen bleiben nach Kosten, Walk-Forward und OOS stabil?

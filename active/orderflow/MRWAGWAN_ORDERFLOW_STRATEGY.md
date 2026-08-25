@@ -43,6 +43,17 @@ Diese Prinzipien haben eine belastbare fachliche Basis, sind aber noch keine pro
 - **CORE — No edge = no trade:** Keine erzwungene Long-/Short-Entscheidung.
 - **CORE — Outcome-Blindheit:** Regeln und Entscheidung werden vor der historischen Auflösung eingefroren.
 
+### Aktuell verfügbare Lehransicht
+
+- TradingView-Vorlage: `MRWAGWAN_ORDERFLOW_CORE`
+- verfügbarer Kern: natives Session-VWAP (`Session`, `hlc3`, Bänder aus) plus natives CVD (`1D`, `Time`, 1m Intrabar)
+- Standard-Lehrfeed: `CME_MINI_DL:NQ1!`, 5m
+- verbindliche Kennzeichnung: Futuresfeed verzögert; CVD ist TradingView-Intrabar-Schätzung und keine echte Bid-/Ask-Tickhistorie
+- Volume Profile/TPO: im aktuell praktisch erkannten Basic-Konto gesperrt
+- Footprint/DOM/Tape: nicht als aktive Evidenz zulässig, bis MCP und Feed praktisch genügen
+
+Die Vorlagenkonfiguration ist eine Lehransicht, keine validierte Setup-Regel.
+
 ## 5. Analyse-Sequenz
 
 1. **Feed prüfen:** Instrument, Börse, Kontrakt, Echtzeit/Delay, Volume-Typ, Bid/Ask-Klassifikation, Tick- und Depth-Verfügbarkeit.

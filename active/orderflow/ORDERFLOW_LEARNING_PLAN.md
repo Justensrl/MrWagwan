@@ -95,4 +95,4 @@ Keine Setup-Hochstufung aufgrund eines einzelnen Videos, Trades oder Gewinnergeb
 
 ## Unmittelbarer nächster sinnvoller Schritt
 
-`OF_TRAINING_001` soll eine reine Level-0/1-Datenleseübung sein. Vor einer Entry-Aufgabe muss ein zentraler Futures-Feed mit tatsächlich auslesbarem Bid/Ask-Volumen oder eine klar als Schätzung deklarierte Lehransicht verfügbar sein.
+`OF_TRAINING_001` soll eine reine Level-0/1-Datenleseübung mit `MRWAGWAN_ORDERFLOW_CORE` auf `CME_MINI_DL:NQ1!`, 5m sein. Der Schüler muss den Feed als verzögert und das CVD als Intrabar-Schätzung benennen. Erst danach werden VWAP-Lage, CVD versus Preisfortschritt und Follow-through bewertet. Footprint-/DOM-/Tape-Aufgaben bleiben gesperrt, bis die benötigten Daten praktisch verfügbar sind.

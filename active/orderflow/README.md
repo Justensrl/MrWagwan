@@ -12,6 +12,7 @@ Dieser Ordner ist die einzige aktive Quelle für neue Analysen, Übungen, Resear
 - `ORDERFLOW_LEARNING_PLAN.md` — Lehrreihenfolge
 - `ORDERFLOW_RESEARCH_LOG.md` — Entscheidungen und offene Fragen
 - `ORDERFLOW_TECHNICAL_CAPABILITY_AUDIT.md` — verfügbare Daten und Grenzen
+- `MRWAGWAN_ORDERFLOW_INDICATORS.md` — geprüfte Tool-Rangliste, Core-Template, Feeds und Funktionstests
 - `ORDERFLOW_BACKTEST_RESULTS.md` — strikt getrennte Nullstatistik
 - `ORDERFLOW_GLOSSARY.md` — Begriffe
 - `ORDERFLOW_TRAINING_PROGRESS.json` — neue Serie ab OF_TRAINING_001

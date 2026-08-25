@@ -54,3 +54,29 @@
 ### Nächste Research-Aktion
 
 Einen rechtmäßig verfügbaren, dokumentierten CME-Futures-Datensatz mit Tick-, Bid/Ask- und möglichst Depth-Historie beschaffen oder eine Plattform anbinden, die diese Daten exportierbar liefert. Erst danach Testprotokoll präregistrieren.
+
+## 2026-08-25 — Indikator-, Feed- und Template-Audit
+
+### OWN RESEARCH — praktisch bestätigt
+
+- TradingView-Konto meldete `Basic`, nicht Essential.
+- `MRWAGWAN_ORDERFLOW_CORE` wurde als neue Indikatorvorlage erstellt; vorher waren keine persönlichen Indikatorvorlagen vorhanden.
+- Kern: natives Session-VWAP (`Session`, `hlc3`, Bänder aus) plus natives CVD (`1D`, `Time`, Intrabar 1m).
+- VWAP und CVD lieferten auf `COMEX:GC1!`, `CME_MINI:NQ1!`, `CME_MINI:ES1!`, `CME:6E1!`, `COINBASE:BTCUSD` und `BINANCE:BTCUSDT.P` nichtleere Werte.
+- Futures wurden als `_DL` aufgelöst; Quotezeitstempel belegten rund zehn Minuten Delay.
+- NQ Open Interest lieferte auf Daily `298,2K`.
+- Session Volume Profile und TPO öffneten bei freiem Indikatorplatz eine Basic→Premium-Sperre.
+- Native Footprint-/TPO-Charttypen sind in der MCP-Charttyp-API nicht vorhanden.
+- DOM scheiterte mangels Panel/Broker-Tier-2; Time & Sales hat kein MCP-Werkzeug.
+- Das CPI-Fenster 12.08.2026, 14:30 Europe/Berlin wurde visuell mit VWAP/CVD geprüft. Der erste Impuls und spätere Gegenfluss bestätigen: Delta ohne Follow-through ist kein Richtungssignal.
+
+### Entscheidung
+
+Der aktive Kern bleibt `VWAP + CVD`. OI ist optional/marktbezogen. Volume Profile ist erster Upgrade-Kandidat. Footprint, DOM und Tape bleiben `NEEDS MORE DATA` statt durch Community-Skripte simuliert zu werden.
+
+### Nicht ausgeführt
+
+- kein Layout gespeichert oder überschrieben
+- keine echte Order, kein Trade, kein Alert
+- keine Pine-Erstellung oder Veröffentlichung
+- kein Community-Orderflow-/Whale-/Signalindikator
